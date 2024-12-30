@@ -5,7 +5,7 @@
 #   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # fi
 
-export TERM=alacritty
+export TERM=xterm-ghostty
 
 # # Create a hash table for globally stashing variables without polluting main
 # scope with a bunch of identifiers.

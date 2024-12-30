@@ -47,6 +47,7 @@ shell-integration-features     = no-cursor,sudo,title
 keybind                        = global:cmd+shift+space=toggle_quick_terminal
 keybind                        = cmd+shift+f=toggle_fullscreen
 
+keybind                        = alt+r=reload_config
 keybind                        = cmd+s>r=reload_config
 keybind                        = cmd+s>x=close_surface
 keybind                        = cmd+s>n=new_window
