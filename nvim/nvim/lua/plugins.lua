@@ -31,6 +31,8 @@ if is_mac then
 	max_jobs = 32
 end
 
+local trigger_text = ';'
+
 return require('lazy').setup({
 	-- Alternative to impatient, uses sqlite. Faster ;)
 	-- https://github.com/tami5/impatient.nvim
@@ -916,11 +918,22 @@ return require('lazy').setup({
           },
         },
         ghost_text = {
-          enabled = false,
+          enabled = true,
         },
       },
 
       sources = {
+        cmdline = function()
+          local type = vim.fn.getcmdtype()
+          if type == "/" or type == "?" then
+            return { "buffer" }
+          end
+          if type == ":" then
+            return { "cmdline" }
+          end
+          return {}
+        end,
+
         default = function(ctx)
           local success, node = pcall(vim.treesitter.get_node)
           if vim.bo.filetype == 'lua' then
@@ -931,18 +944,120 @@ return require('lazy').setup({
             return {
               'lsp',
               'path',
-              'cmdline',
               'snippets',
               'buffer',
               'copilot',
+              'luasnip',
               'avante_commands',
               'avante_mentions',
               'avante_files',
              }
           end
         end,
-        -- cmdline = {},
         providers = {
+          lsp = {
+            name = 'lsp',
+            enabled = true,
+            module = 'blink.cmp.sources.lsp',
+            -- When linking markdown notes, I would get snippets and text in the
+            -- suggestions, I want those to show only if there are no LSP
+            -- suggestions
+            fallbacks = {
+              'snippets',
+              'luasnip',
+              'buffer',
+            },
+            score_offset = 90, -- the higher the number, the higher the priority
+          },
+          luasnip = {
+            name = 'luasnip',
+            enabled = true,
+            module = 'blink.cmp.sources.luasnip',
+            min_keyword_length = 2,
+            fallbacks = { 'snippets' },
+            score_offset = 85,
+            max_items = 8,
+            -- Only show luasnip items if I type the trigger_text characters, so
+            -- to expand the "bash" snippet, if the trigger_text is ";" I have to
+            -- type ";bash"
+            should_show_items = function()
+              local col = vim.api.nvim_win_get_cursor(0)[2]
+              local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
+              -- NOTE: remember that `trigger_text` is modified at the top of the file
+              return before_cursor:match(trigger_text .. "%w*$") ~= nil
+            end,
+            -- After accepting the completion, delete the trigger_text characters
+            -- from the final inserted text
+            transform_items = function(ctx, items)
+              -- WARNING: Explicitly referencing ctx otherwise I was getting an "unused" warning
+              local _ = ctx
+              local col = vim.api.nvim_win_get_cursor(0)[2]
+              local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
+              local trigger_pos = before_cursor:find(trigger_text .. '[^' .. trigger_text .. ']*$')
+              if trigger_pos then
+                for _, item in ipairs(items) do
+                  item.textEdit = {
+                    newText = item.insertText or item.label,
+                    range = {
+                      start = { line = vim.fn.line(".") - 1, character = trigger_pos - 1 },
+                      ["end"] = { line = vim.fn.line(".") - 1, character = col },
+                    },
+                  }
+                end
+              end
+              -- NOTE: After the transformation, I have to reload the luasnip source
+              -- Otherwise really crazy shit happens and I spent way too much time
+              -- figurig this out
+              vim.schedule(function()
+                require("blink.cmp").reload("luasnip")
+              end)
+              return items
+            end,
+          },
+          path = {
+            name = 'Path',
+            module = 'blink.cmp.sources.path',
+            score_offset = 3,
+            -- When typing a path, I would get snippets and text in the
+            -- suggestions, I want those to show only if there are no path
+            -- suggestions
+            fallbacks = {
+              'snippets',
+              'luasnip',
+              'buffer',
+            },
+            opts = {
+              trailing_slash = false,
+              label_trailing_slash = true,
+              get_cwd = function(context)
+                return vim.fn.expand(("#%d:p:h"):format(context.bufnr))
+              end,
+              show_hidden_files_by_default = true,
+            },
+          },
+          buffer = {
+            name = 'Buffer',
+            enabled = true,
+            max_items = 3,
+            module = 'blink.cmp.sources.buffer',
+            min_keyword_length = 4,
+          },
+          snippets = {
+            name = 'snippets',
+            enabled = true,
+            max_items = 3,
+            module = 'blink.cmp.sources.snippets',
+            min_keyword_length = 4,
+            score_offset = 80, -- the higher the number, the higher the priority
+          },
+          -- Example on how to configure dadbod found in the main repo
+          -- https://github.com/kristijanhusak/vim-dadbod-completion
+          -- dadbod = {
+          --   name = "Dadbod",
+          --   module = "vim_dadbod_completion.blink",
+          --   score_offset = 85, -- the higher the number, the higher the priority
+          -- },
+
           avante_commands = {
             name = 'avante_commands',
             module = 'blink.compat.source',
@@ -972,8 +1087,9 @@ return require('lazy').setup({
             end,
             name = 'copilot',
             module = 'blink-cmp-copilot',
-            score_offset = 2000,
+            score_offset = -100, -- the higher the number, the higher the priority
             async = true,
+            min_keyword_length = 6,
             transform_items = function(_, items)
               local CompletionItemKind = require('blink.cmp.types').CompletionItemKind
               local kind_idx = #CompletionItemKind + 1

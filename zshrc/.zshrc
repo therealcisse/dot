@@ -15,51 +15,6 @@ __TRC[ITALIC_ON]=$'\e[3m'
 __TRC[ITALIC_OFF]=$'\e[23m'
 
 #
-# Teh H4xx
-#
-
-if [ "$(uname)" = "Darwin" ]; then
-  # Suppress unwanted Homebrew-installed stuff.
-  if [ -e /usr/local/share/zsh/site-functions/_git ]; then
-    mv -f /usr/local/share/zsh/site-functions/{,disabled.}_git
-  fi
-
-  # Set 60 fps key repeat rate
-  #
-  # Equivalent to the fatest rate acheivable with:
-  #
-  #     defaults write NSGlobalDomain KeyRepeat -int 1
-  #
-  # But doesn't require a logout and will get restored every time we open a
-  # shell (for example, if somebody manipulates the slider in the UI).
-  #
-  # Fastest rate available from UI corresponds to:
-  #
-  #     defaults write NSGlobalDomain KeyRepeat -int 2
-  #
-  # Slowest rate available from UI corresponds to:
-  #
-  #     defaults write NSGlobalDomain KeyRepeat -int 120
-  #
-  # Values at each slider position in UI, from slowest to fastest:
-  #
-  # - 120 -> 2 seconds (ie. .5 fps)
-  # - 90 -> 1.5 seconds (ie .6666 fps)
-  # - 60 -> 1 second (ie 1 fps)
-  # - 30 -> 0.5 seconds (ie. 2 fps)
-  # - 12 -> 0.2 seconds (ie. 5 fps)
-  # - 6 -> 0.1 seconds (ie. 10 fps)
-  # - 2 -> 0.03333 seconds (ie. 30 fps)
-  #
-  # See: https://github.com/mathiasbynens/dotfiles/issues/687
-  #
-  if command -v dry &> /dev/null; then
-    dry 0.0166666666667 > /dev/null
-  fi
-fi
-
-
-#
 # Completion
 #
 
@@ -94,16 +49,6 @@ zstyle ':completion:*:descriptions' format %F{default}%B%{$__TRC[ITALIC_ON]%}---
 # Enable keyboard navigation of completions in menu
 # (not just tab/shift-tab but cursor keys as well):
 zstyle ':completion:*' menu select
-
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
-
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-# ZSH_THEME="therealcisse"
-# ZSH_THEME="robbyrussell"
-ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -155,33 +100,6 @@ plugins=(
   # gcloud
   # # flutter
 )
-
-# Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=~/.zsh/oh-my-zsh
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-
-# Pathogen-like loader for plugins
-# find -L ~/.zsh/bundle -type f -name "*.plugin.zsh" | sort | while read filename; do source "$filename"; done
 
 export DISABLE_AUTO_TITLE='true'
 
@@ -289,46 +207,11 @@ setopt SHARE_HISTORY           # share history across shells
 autoload -U select-word-style
 select-word-style bash # only alphanumeric chars are considered WORDCHARS
 
-# NOTE: must come after select-word-style.
-# source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
-
-# Note that this will only ensure unique history if we supply a prefix
-# before hitting "up" (ie. we perform a "search"). HIST_FIND_NO_DUPS
-# won't prevent dupes from appearing when just hitting "up" without a
-# prefix (ie. that's "zle up-line-or-history" and not classified as a
-# "search"). So, we have HIST_IGNORE_DUPS to make life bearable for that
-# case.
-#
-# https://superuser.com/a/1494647/322531
-HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
-
-# Uncomment this to get syntax highlighting:
-# NOTE: must come after select-word-style.
-# source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 #
 # Bindings
 #
 
 bindkey -e # emacs bindings, set to -v for vi bindings
-
-# Use "cbt" capability ("back_tab", as per `man terminfo`), if we have it:
-if tput cbt &> /dev/null; then
-  bindkey "$(tput cbt)" reverse-menu-complete # make Shift-tab go to previous completion
-fi
-
-
-# if [[ $(uname -a) =~ "Ubuntu" ]]; then
-#   bindkey "$key[Up]" history-substring-search-up
-#   bindkey "$key[Down]" history-substring-search-down
-# else
-#   bindkey '^[[A' history-substring-search-up
-#   bindkey '^[[B' history-substring-search-down
-# fi
-# bindkey '^P' history-substring-search-up
-# bindkey '^N' history-substring-search-down
-# bindkey -M vicmd 'k' history-substring-search-up
-# bindkey -M vicmd 'j' history-substring-search-down
 
 autoload -U edit-command-line
 zle -N edit-command-line
@@ -362,8 +245,6 @@ bindkey "^[[1;5D" backward-word # For Arch.
 # Other prerequisites before we set up `$PATH`.
 #
 
-test -d $HOME/n && export N_PREFIX="$HOME/n"
-
 #
 # Other
 #
@@ -390,6 +271,27 @@ bindkey '^j' down-line-or-search
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
+
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Disable underline
+(( ${+ZSH_HIGHLIGHT_STYLES} )) || typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[path]=none
+ZSH_HIGHLIGHT_STYLES[path_prefix]=none
+
+autoload -U select-word-style
+select-word-style bash # only alphanumeric chars are considered WORDCHARS
+
+HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
+
+source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
 
 # tmux unsets this and then xclip gets confused
 if [ -n "$DISPLAY" ]; then
@@ -438,7 +340,6 @@ alias java17="export JAVA_HOME=`/usr/libexec/java_home -v 17`"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 eval "$(zoxide init zsh)"
-# eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
 
 if [ -d "$HOME/.zshenv.d" ]; then
@@ -447,6 +348,5 @@ if [ -d "$HOME/.zshenv.d" ]; then
   done
 fi
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+eval "$(starship init zsh)"
 
