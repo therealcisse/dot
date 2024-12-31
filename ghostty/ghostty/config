@@ -22,8 +22,6 @@ font-thicken                   = false
 font-size                      = 13
 
 # Look and Feel
-adjust-cursor-thickness        = 3
-adjust-underline-position      = 3
 bold-is-bright                 = true
 link-url                       = true
 macos-titlebar-proxy-icon      = hidden
