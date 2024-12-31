@@ -6,7 +6,7 @@ exec-on-workspace-change = [
 ]
 
 # Start AeroSpace at login
-start-at-login = false
+start-at-login = true
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
@@ -169,8 +169,8 @@ shift-ctrl-alt-cmd-g = 'move-node-to-workspace g --focus-follows-window'
 shift-ctrl-alt-cmd-c = 'move-node-to-workspace c --focus-follows-window'
 shift-ctrl-alt-cmd-s = 'move-node-to-workspace s --focus-follows-window'
 
-ctrl-alt-cmd-tab = 'workspace-back-and-forth'
-shift-ctrl-alt-cmd-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+ctrl-alt-cmd-space = 'workspace-back-and-forth'
+shift-ctrl-alt-cmd-space = 'move-workspace-to-monitor --wrap-around next'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 ctrl-alt-cmd-enter = 'mode apps'
