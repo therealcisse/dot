@@ -25,8 +25,7 @@ function rmDS_Store() {
 }
 
 function xattrNVIM() {
-  xattr -d com.apple.quarantine ~/nvim-macos/bin/nvim
-  for l in `ls  ~/nvim-macos/lib/nvim/parser/`; do xattr -d com.apple.quarantine ~/nvim-macos/lib/nvim/parser/$l; done
+  xattr -r -d com.apple.quarantine ~/nvim-macos
 }
 
 # TODO: decide whether this is a reasonable idea
