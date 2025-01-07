@@ -683,7 +683,8 @@ return require('lazy').setup({
       'markdown',
       'Avante',
       'AvanteInput',
-      'codecompanion'
+      'codecompanion',
+      'CopilotChat',
     },
   },
 
@@ -796,26 +797,84 @@ return require('lazy').setup({
     end
   },
 
+  {
+    'karb94/neoscroll.nvim',
+    opts = {},
+    enabled = true,
+    config = function ()
+      local neoscroll = require('neoscroll')
+
+      local keymap = {
+        ['<C-b>'] = function() neoscroll.ctrl_b({ duration = 100 }) end;
+        ['<C-f>'] = function() neoscroll.ctrl_f({ duration = 100 }) end;
+
+        ['<C-y>'] = function() neoscroll.scroll(-0.1, { move_cursor = false, duration = 50 }) end;
+        ['<C-e>'] = function() neoscroll.scroll(0.1, { move_cursor = false, duration = 50 }) end;
+
+        ['zt']    = function() neoscroll.zt({ half_win_duration = 150 }) end;
+        ['zz']    = function() neoscroll.zz({ half_win_duration = 150 }) end;
+        ['zb']    = function() neoscroll.zb({ half_win_duration = 150 }) end;
+      }
+
+      local modes = { 'n', 'v', 'x' }
+      for key, func in pairs(keymap) do
+        vim.keymap.set(modes, key, func)
+      end
+
+      neoscroll.setup {
+        pre_hook = function(info) if info == 'cursorline' then vim.wo.cursorline = false end end,
+        post_hook = function(info) if info == 'cursorline' then vim.wo.cursorline = true end end,
+      }
+    end,
+  },
+
   -- {
   --   "folke/edgy.nvim",
   --   event = "VeryLazy",
   --   opts = {}
   -- },
+
   {
-    'saghen/blink.compat',
-    -- use the latest release, via version = '*', if you also use the latest release for blink.cmp
-    version = '*',
-    -- lazy.nvim will automatically load the plugin when it's required by blink.cmp
-    lazy = true,
-    -- make sure to set opts so that lazy.nvim calls blink.compat's setup
-    opts = {
-    },
+    'milanglacier/minuet-ai.nvim',
+    enabled = false,
+    config = function()
+      require('minuet').setup {
+        blink = {
+          enable_auto_complete = true,
+        },
+        provider = 'gemini',
+        virtualtext = {
+          auto_trigger_ft = {},
+          keymap = {
+            accept = '<A-A>',
+            accept_line = '<A-a>',
+            -- Cycle to prev completion item, or manually invoke completion
+            prev = '<A-[>',
+            -- Cycle to next completion item, or manually invoke completion
+            next = '<A-]>',
+            dismiss = '<A-e>',
+          },
+        },
+      }
+    end,
   },
+
   {
     'saghen/blink.cmp',
     dependencies = {
       'rafamadriz/friendly-snippets',
-      'giuxtaposition/blink-cmp-copilot',
+      -- 'giuxtaposition/blink-cmp-copilot',
+      {
+        'saghen/blink.compat',
+        -- use the latest release, via version = '*', if you also use the latest release for blink.cmp
+        version = '*',
+        -- lazy.nvim will automatically load the plugin when it's required by blink.cmp
+        lazy = true,
+        -- make sure to set opts so that lazy.nvim calls blink.compat's setup
+        opts = {
+        },
+      },
+
     },
 
     version = 'v0.*',
@@ -835,6 +894,12 @@ return require('lazy').setup({
 
       keymap = {
         preset = 'default',
+
+        ['<C-y>'] = {
+          function (cmp)
+            cmp.show { providers = { 'minuet' } }
+          end,
+        },
 
         ['<CR>'] = { 'accept', 'fallback' },
         ['<C-e>'] = { 'select_and_accept', 'fallback' },
@@ -918,7 +983,7 @@ return require('lazy').setup({
           },
         },
         ghost_text = {
-          enabled = true,
+          enabled = false,
         },
       },
 
@@ -934,7 +999,7 @@ return require('lazy').setup({
           return {}
         end,
 
-        default = function(ctx)
+        default = function(_)
           local success, node = pcall(vim.treesitter.get_node)
           if vim.bo.filetype == 'lua' then
             return { 'lsp', 'path' }
@@ -946,15 +1011,23 @@ return require('lazy').setup({
               'path',
               'snippets',
               'buffer',
-              'copilot',
+              -- 'copilot',
               'luasnip',
-              'avante_commands',
-              'avante_mentions',
-              'avante_files',
+              -- 'minuet',
              }
           end
         end,
         providers = {
+          -- minuet = {
+          --   name = 'minuet',
+          --   module = 'minuet.blink',
+          --   score_offset = 8, -- Gives minuet higher priority among suggestions
+          --
+          -- --   enabled = function()
+          -- --     return not vim.tbl_contains({ 'scala', 'sbt', 'java', 'dart' }, vim.bo.filetype) and vim.bo.buftype ~= 'prompt'
+          -- --   end,
+          -- },
+
           lsp = {
             name = 'lsp',
             enabled = true,
@@ -967,8 +1040,9 @@ return require('lazy').setup({
               'luasnip',
               'buffer',
             },
-            score_offset = 90, -- the higher the number, the higher the priority
+            score_offset = 70, -- the higher the number, the higher the priority
           },
+
           luasnip = {
             name = 'luasnip',
             enabled = true,
@@ -1014,6 +1088,7 @@ return require('lazy').setup({
               return items
             end,
           },
+
           path = {
             name = 'Path',
             module = 'blink.cmp.sources.path',
@@ -1035,6 +1110,7 @@ return require('lazy').setup({
               show_hidden_files_by_default = true,
             },
           },
+
           buffer = {
             name = 'Buffer',
             enabled = true,
@@ -1042,6 +1118,7 @@ return require('lazy').setup({
             module = 'blink.cmp.sources.buffer',
             min_keyword_length = 4,
           },
+
           snippets = {
             name = 'snippets',
             enabled = true,
@@ -1050,6 +1127,7 @@ return require('lazy').setup({
             min_keyword_length = 4,
             score_offset = 80, -- the higher the number, the higher the priority
           },
+
           -- Example on how to configure dadbod found in the main repo
           -- https://github.com/kristijanhusak/vim-dadbod-completion
           -- dadbod = {
@@ -1064,42 +1142,45 @@ return require('lazy').setup({
             score_offset = 90, -- show at a higher priority than lsp
             opts = {},
           },
+
           avante_files = {
             name = 'avante_commands',
             module = 'blink.compat.source',
             score_offset = 100, -- show at a higher priority than lsp
             opts = {},
           },
+
           avante_mentions = {
             name = 'avante_mentions',
             module = 'blink.compat.source',
             score_offset = 1000, -- show at a higher priority than lsp
             opts = {},
           },
+
           -- dadbod = {
           --   name = 'Dadbod',
           --   module = 'vim_dadbod_completion.blink',
           --   score_offset = 950,
           -- },
-          copilot = {
-            enabled = function()
-              return not vim.tbl_contains({ 'scala', 'sbt', 'java', 'dart' }, vim.bo.filetype) and vim.bo.buftype ~= 'prompt'
-            end,
-            name = 'copilot',
-            module = 'blink-cmp-copilot',
-            score_offset = -100, -- the higher the number, the higher the priority
-            async = true,
-            min_keyword_length = 6,
-            transform_items = function(_, items)
-              local CompletionItemKind = require('blink.cmp.types').CompletionItemKind
-              local kind_idx = #CompletionItemKind + 1
-              CompletionItemKind[kind_idx] = 'Copilot'
-              for _, item in ipairs(items) do
-                item.kind = kind_idx
-              end
-              return items
-            end,
-          },
+          -- copilot = {
+          --   enabled = function()
+          --     return not vim.tbl_contains({ 'scala', 'sbt', 'java', 'dart' }, vim.bo.filetype) and vim.bo.buftype ~= 'prompt'
+          --   end,
+          --   name = 'copilot',
+          --   module = 'blink-cmp-copilot',
+          --   score_offset = -100, -- the higher the number, the higher the priority
+          --   async = true,
+          --   min_keyword_length = 6,
+          --   transform_items = function(_, items)
+          --     local CompletionItemKind = require('blink.cmp.types').CompletionItemKind
+          --     local kind_idx = #CompletionItemKind + 1
+          --     CompletionItemKind[kind_idx] = 'Copilot'
+          --     for _, item in ipairs(items) do
+          --       item.kind = kind_idx
+          --     end
+          --     return items
+          --   end,
+          -- },
         },
       },
 
@@ -1160,7 +1241,11 @@ return require('lazy').setup({
       },
 
     },
-    opts_extend = { 'sources.default' }
+    opts_extend = {
+      "sources.completion.enabled_providers",
+      "sources.compat",
+      "sources.default",
+    },
   },
 
   {
@@ -1198,8 +1283,8 @@ return require('lazy').setup({
         chat_autocomplete = false,
         -- Use tab for completion
         complete = {
-          detail = 'Use @<C-space> or /<C-space> for options.',
-          insert = '<C-space>',
+          detail = 'Use @<C-y> or /<C-y> for options.',
+          insert = '<C-y>',
         },
         -- Close the chat
         close = {
@@ -1263,12 +1348,20 @@ return require('lazy').setup({
           vim.opt_local.number = true
 
           -- Get current filetype and set it to markdown if the current filetype is copilot-chat
-          local ft = vim.bo.filetype
-          if ft == 'copilot-chat' then
-            vim.bo.filetype = 'markdown'
-          end
+          -- local ft = vim.bo.filetype
+          -- if ft == 'copilot-chat' then
+          --   vim.bo.filetype = 'markdown'
+          -- end
         end,
       })
+
+      vim.api.nvim_create_autocmd('BufEnter', {
+        pattern = "copilot-*",
+        callback = function()
+          vim.bo.completeopt = "menuone,noinsert,popup"
+        end
+      })
+
     end,
     event = 'VeryLazy',
     keys = {

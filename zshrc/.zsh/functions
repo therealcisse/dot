@@ -373,3 +373,91 @@ function dDebug() {
 function kLogs() {
   kubectl logs $1 -n ${2-youtoo}
 }
+
+# Function to clean a Git repository (dry run or actual cleaning).
+# Optional arguments:
+#   -n: Dry run (show what would be deleted).
+#   -x: Remove also ignored files.
+git_clean_repo() {
+  local remove_ignored=false
+  local dry_run=false
+  local ignore_globs=()
+
+  # Process arguments
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -n)
+        dry_run=true
+        shift
+        ;;
+      -x)
+        remove_ignored=true
+        shift
+        ;;
+      --ignore=*)
+        ignore_globs+=("${1#*=}") # Extract the glob after the '='
+        shift
+        ;;
+      *)
+        echo "Usage: git_clean_repo [-n] [-x] [--ignore=<glob>]..."
+        echo "  -n: Dry run (show what would be deleted)."
+        echo "  -x: Remove also ignored files and directories."
+        echo "  --ignore=<glob>: Exclude files matching the glob pattern (can be repeated)."
+        return 1
+        ;;
+    esac
+  done
+
+  # Check if we are in a Git repository.
+  if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    echo "Error: Not a Git repository."
+    return 1
+  fi
+
+  local dry_run_message="(Dry run - no files will be deleted)"
+  local clean_cmd=("git" "clean")
+
+  if "$dry_run"; then
+    clean_cmd+=("-n")
+  fi
+
+  clean_cmd+=("-fd") # Always remove directories and force
+
+  # Add ignore patterns to the command
+  for glob in "${ignore_globs[@]}"; do
+    clean_cmd+=("--exclude=$glob")
+  done
+
+  if "$dry_run"; then
+    echo "$dry_run_message Removing untracked files and directories (excluding specified globs)..."
+  else
+    echo "Removing untracked files and directories (excluding specified globs)..."
+  fi
+
+  "${clean_cmd[@]}"
+
+  # Only remove ignored files if -x is given AND if there are files left to remove
+  if "$remove_ignored"; then
+    local clean_cmd_x=("git" "clean")
+    if "$dry_run"; then
+      clean_cmd_x+=("-n")
+      echo "$dry_run_message Removing untracked files and directories (including ignored files, excluding specified globs)..."
+    else
+      echo "Removing untracked files and directories (including ignored files, excluding specified globs)..."
+    fi
+    clean_cmd_x+=("-fdx")
+    for glob in "${ignore_globs[@]}"; do
+      clean_cmd_x+=("--exclude=$glob")
+    done
+    "${clean_cmd_x[@]}"
+  fi
+
+  if "$dry_run"; then
+    echo "$dry_run_message Cleaning complete."
+  else
+    echo "Cleaning complete."
+  fi
+
+  return 0
+}
+
