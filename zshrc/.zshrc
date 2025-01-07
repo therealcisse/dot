@@ -205,6 +205,8 @@ test -e $HOME/.zsh/functions.private && source $HOME/.zsh/functions.private
 source <(kubectl completion zsh)
 complete -C '/usr/local/bin/aws_completer' aws
 
+source $(brew --prefix)/share/zsh-autopair/autopair.zsh
+
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^i' autosuggest-accept
 bindkey '^u' autosuggest-toggle
