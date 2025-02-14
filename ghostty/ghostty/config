@@ -1,7 +1,8 @@
 # # ghostty +show-config --default --docs
 # # ghostty +list-themes
 
-# quick-terminal-size            = 25%,75%
+cursor-opacity                   = 0.3
+# quick-terminal-space-behavior  = remain
 
 # Font
 freetype-load-flags            = no-hinting

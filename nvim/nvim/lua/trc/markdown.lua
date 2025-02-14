@@ -19,19 +19,6 @@ md.setup({
     -- Do not indent heading titles, only the body
     skip_heading = false,
   },
-  -- Mimic org-indent-mode behavior by indenting everything under a heading based on the
-  -- level of the heading. Indenting starts from level 2 headings onward.
-  indent = {
-    -- Turn on / off org-indent-mode
-    enabled = false,
-    -- Amount of additional padding added for each heading level
-    per_level = 2,
-    -- Heading levels <= this value will not be indented
-    -- Use 0 to begin indenting from the very first level
-    skip_level = 1,
-    -- Do not indent heading titles, only the body
-    skip_heading = false,
-  },
   sign = {
     -- Turn on / off sign rendering
     enabled = true,
@@ -127,207 +114,207 @@ md.setup({
     -- Determines how the table as a whole is rendered:
     --  none:   disables all rendering
     --  normal: applies the 'cell' style rendering to each row of the table
-        --  full:   normal + a top & bottom line that fill out the table when lengths match
-        style = 'full',
-        -- Determines how individual cells of a table are rendered:
-        --  overlay: writes completely over the table, removing conceal behavior and highlights
-        --  raw:     replaces only the '|' characters in each row, leaving the cells unmodified
-        --  padded:  raw + cells are padded to maximum visual width for each column
-        --  trimmed: padded except empty space is subtracted from visual width calculation
-        cell = 'padded',
-        -- Amount of space to put between cell contents and border
-        padding = 1,
-        -- Minimum column width to use for padded or trimmed cell
-        min_width = 0,
-        -- Characters used to replace table border
-        -- Correspond to top(3), delimiter(3), bottom(3), vertical, & horizontal
-        -- stylua: ignore
-        border = {
-            '┌', '┬', '┐',
-            '├', '┼', '┤',
-            '└', '┴', '┘',
-            '│', '─',
-        },
-        -- Gets placed in delimiter row for each column, position is based on alignment
-        alignment_indicator = '━',
-        -- Highlight for table heading, delimiter, and the line above
-        head = 'RenderMarkdownTableHead',
-        -- Highlight for everything else, main table rows and the line below
-        row = 'RenderMarkdownTableRow',
-        -- Highlight for inline padding used to add back concealed space
-        filler = 'RenderMarkdownTableFill',
+    --  full:   normal + a top & bottom line that fill out the table when lengths match
+    style = 'full',
+    -- Determines how individual cells of a table are rendered:
+    --  overlay: writes completely over the table, removing conceal behavior and highlights
+    --  raw:     replaces only the '|' characters in each row, leaving the cells unmodified
+    --  padded:  raw + cells are padded to maximum visual width for each column
+    --  trimmed: padded except empty space is subtracted from visual width calculation
+    cell = 'padded',
+    -- Amount of space to put between cell contents and border
+    padding = 1,
+    -- Minimum column width to use for padded or trimmed cell
+    min_width = 0,
+    -- Characters used to replace table border
+    -- Correspond to top(3), delimiter(3), bottom(3), vertical, & horizontal
+    -- stylua: ignore
+    border = {
+      '┌', '┬', '┐',
+      '├', '┼', '┤',
+      '└', '┴', '┘',
+      '│', '─',
     },
-    quote = {
-        -- Turn on / off block quote & callout rendering
-        enabled = true,
-        -- Replaces '>' of 'block_quote'
-        icon = '▋',
-        -- Whether to repeat icon on wrapped lines. Requires neovim >= 0.10. This will obscure text if
-        -- not configured correctly with :h 'showbreak', :h 'breakindent' and :h 'breakindentopt'. A
-        -- combination of these that is likely to work is showbreak = '  ' (2 spaces), breakindent = true,
-        -- breakindentopt = '' (empty string). These values are not validated by this plugin. If you want
-        -- to avoid adding these to your main configuration then set them in win_options for this plugin.
-        repeat_linebreak = false,
-        -- Highlight for the quote icon
-        highlight = 'RenderMarkdownQuote',
+    -- Gets placed in delimiter row for each column, position is based on alignment
+    alignment_indicator = '━',
+    -- Highlight for table heading, delimiter, and the line above
+    head = 'RenderMarkdownTableHead',
+    -- Highlight for everything else, main table rows and the line below
+    row = 'RenderMarkdownTableRow',
+    -- Highlight for inline padding used to add back concealed space
+    filler = 'RenderMarkdownTableFill',
+  },
+  quote = {
+    -- Turn on / off block quote & callout rendering
+    enabled = true,
+    -- Replaces '>' of 'block_quote'
+    icon = '▋',
+    -- Whether to repeat icon on wrapped lines. Requires neovim >= 0.10. This will obscure text if
+    -- not configured correctly with :h 'showbreak', :h 'breakindent' and :h 'breakindentopt'. A
+    -- combination of these that is likely to work is showbreak = '  ' (2 spaces), breakindent = true,
+    -- breakindentopt = '' (empty string). These values are not validated by this plugin. If you want
+    -- to avoid adding these to your main configuration then set them in win_options for this plugin.
+    repeat_linebreak = false,
+    -- Highlight for the quote icon
+    highlight = 'RenderMarkdownQuote',
+  },
+  -- Checkboxes are a special instance of a 'list_item' that start with a 'shortcut_link'
+  -- There are two special states for unchecked & checked defined in the markdown grammar
+  checkbox = {
+    -- Turn on / off checkbox state rendering
+    enabled = true,
+    -- Determines how icons fill the available space:
+    --  inline:  underlying text is concealed resulting in a left aligned icon
+    --  overlay: result is left padded with spaces to hide any additional text
+    position = 'inline',
+    unchecked = {
+      -- Replaces '[ ]' of 'task_list_marker_unchecked'
+      icon = '󰄱 ',
+      -- Highlight for the unchecked icon
+      highlight = 'RenderMarkdownUnchecked',
+      -- Highlight for item associated with unchecked checkbox
+      scope_highlight = nil,
     },
-    -- Checkboxes are a special instance of a 'list_item' that start with a 'shortcut_link'
-    -- There are two special states for unchecked & checked defined in the markdown grammar
-    checkbox = {
-        -- Turn on / off checkbox state rendering
-        enabled = true,
-        -- Determines how icons fill the available space:
-        --  inline:  underlying text is concealed resulting in a left aligned icon
-        --  overlay: result is left padded with spaces to hide any additional text
-        position = 'inline',
-        unchecked = {
-            -- Replaces '[ ]' of 'task_list_marker_unchecked'
-            icon = '󰄱 ',
-            -- Highlight for the unchecked icon
-            highlight = 'RenderMarkdownUnchecked',
-            -- Highlight for item associated with unchecked checkbox
-            scope_highlight = nil,
-        },
-        checked = {
-            -- Replaces '[x]' of 'task_list_marker_checked'
-            icon = '󰱒 ',
-            -- Highlight for the checked icon
-            highlight = 'RenderMarkdownChecked',
-            -- Highlight for item associated with checked checkbox
-            scope_highlight = nil,
-        },
-        -- Define custom checkbox states, more involved as they are not part of the markdown grammar
-        -- As a result this requires neovim >= 0.10.0 since it relies on 'inline' extmarks
-        -- Can specify as many additional states as you like following the 'todo' pattern below
-        --   The key in this case 'todo' is for healthcheck and to allow users to change its values
-        --   'raw':             Matched against the raw text of a 'shortcut_link'
-        --   'rendered':        Replaces the 'raw' value when rendering
-        --   'highlight':       Highlight for the 'rendered' icon
-        --   'scope_highlight': Highlight for item associated with custom checkbox
-        custom = {
-            todo = { raw = '[-]', rendered = '󰥔 ', highlight = 'RenderMarkdownTodo', scope_highlight = nil },
-        },
+    checked = {
+      -- Replaces '[x]' of 'task_list_marker_checked'
+      icon = '󰱒 ',
+      -- Highlight for the checked icon
+      highlight = 'RenderMarkdownChecked',
+      -- Highlight for item associated with checked checkbox
+      scope_highlight = nil,
     },
-    bullet = {
-        -- Turn on / off list bullet rendering
-        enabled = true,
-        -- Replaces '-'|'+'|'*' of 'list_item'
-        -- How deeply nested the list is determines the 'level', how far down at that level determines the 'index'
-        -- If a function is provided both of these values are passed in using 1 based indexing
-        -- If a list is provided we index into it using a cycle based on the level
-        -- If the value at that level is also a list we further index into it using a clamp based on the index
-        -- If the item is a 'checkbox' a conceal is used to hide the bullet instead
-        icons = { '●', '○', '◆', '◇' },
-        -- Replaces 'n.'|'n)' of 'list_item'
-        -- How deeply nested the list is determines the 'level', how far down at that level determines the 'index'
-        -- If a function is provided both of these values are passed in using 1 based indexing
-        -- If a list is provided we index into it using a cycle based on the level
-        -- If the value at that level is also a list we further index into it using a clamp based on the index
-        ordered_icons = function(level, index, value)
-            value = vim.trim(value)
-            local value_index = tonumber(value:sub(1, #value - 1))
-            return string.format('%d.', value_index > 1 and value_index or index)
-        end,
-        -- Padding to add to the left of bullet point
-        left_pad = 0,
-        -- Padding to add to the right of bullet point
-        right_pad = 0,
-        -- Highlight for the bullet icon
-        highlight = 'RenderMarkdownBullet',
+    -- Define custom checkbox states, more involved as they are not part of the markdown grammar
+    -- As a result this requires neovim >= 0.10.0 since it relies on 'inline' extmarks
+    -- Can specify as many additional states as you like following the 'todo' pattern below
+    --   The key in this case 'todo' is for healthcheck and to allow users to change its values
+    --   'raw':             Matched against the raw text of a 'shortcut_link'
+    --   'rendered':        Replaces the 'raw' value when rendering
+    --   'highlight':       Highlight for the 'rendered' icon
+    --   'scope_highlight': Highlight for item associated with custom checkbox
+    custom = {
+      todo = { raw = '[-]', rendered = '󰥔 ', highlight = 'RenderMarkdownTodo', scope_highlight = nil },
     },
-    dash = {
-        -- Turn on / off thematic break rendering
-        enabled = true,
-        -- Replaces '---'|'***'|'___'|'* * *' of 'thematic_break'
-        -- The icon gets repeated across the window's width
-        icon = '─',
-        -- Width of the generated line:
-        --  <integer>: a hard coded width value
-        --  full:      full width of the window
-        width = 'full',
-        -- Highlight for the whole line generated from the icon
-        highlight = 'RenderMarkdownDash',
+  },
+  bullet = {
+    -- Turn on / off list bullet rendering
+    enabled = true,
+    -- Replaces '-'|'+'|'*' of 'list_item'
+    -- How deeply nested the list is determines the 'level', how far down at that level determines the 'index'
+    -- If a function is provided both of these values are passed in using 1 based indexing
+    -- If a list is provided we index into it using a cycle based on the level
+    -- If the value at that level is also a list we further index into it using a clamp based on the index
+    -- If the item is a 'checkbox' a conceal is used to hide the bullet instead
+    icons = { '●', '○', '◆', '◇' },
+    -- Replaces 'n.'|'n)' of 'list_item'
+    -- How deeply nested the list is determines the 'level', how far down at that level determines the 'index'
+    -- If a function is provided both of these values are passed in using 1 based indexing
+    -- If a list is provided we index into it using a cycle based on the level
+    -- If the value at that level is also a list we further index into it using a clamp based on the index
+    ordered_icons = function(ctx)
+      local value = vim.trim(ctx.value)
+      local value_index = tonumber(value:sub(1, #value - 1))
+      return string.format('%d.', value_index > 1 and value_index or ctx.index)
+    end,
+    -- Padding to add to the left of bullet point
+    left_pad = 0,
+    -- Padding to add to the right of bullet point
+    right_pad = 0,
+    -- Highlight for the bullet icon
+    highlight = 'RenderMarkdownBullet',
+  },
+  dash = {
+    -- Turn on / off thematic break rendering
+    enabled = true,
+    -- Replaces '---'|'***'|'___'|'* * *' of 'thematic_break'
+    -- The icon gets repeated across the window's width
+    icon = '─',
+    -- Width of the generated line:
+    --  <integer>: a hard coded width value
+    --  full:      full width of the window
+    width = 'full',
+    -- Highlight for the whole line generated from the icon
+    highlight = 'RenderMarkdownDash',
+  },
+  paragraph = {
+    -- Turn on / off paragraph rendering
+    enabled = true,
+    -- Amount of margin to add to the left of paragraphs
+    -- If a floating point value < 1 is provided it is treated as a percentage of the available window space
+    left_margin = 0,
+    -- Minimum width to use for paragraphs
+    min_width = 0,
+  },
+  heading = {
+    -- Turn on / off heading icon & background rendering
+    enabled = true,
+    -- Turn on / off any sign column related rendering
+    sign = true,
+    -- Determines how icons fill the available space:
+    --  right:   '#'s are concealed and icon is appended to right side
+    --  inline:  '#'s are concealed and icon is inlined on left side
+    --  overlay: icon is left padded with spaces and inserted on left hiding any additional '#'
+    position = 'overlay',
+    -- Replaces '#+' of 'atx_h._marker'
+    -- The number of '#' in the heading determines the 'level'
+    -- The 'level' is used to index into the list using a cycle
+    icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
+    -- Added to the sign column if enabled
+    -- The 'level' is used to index into the list using a cycle
+    signs = { '󰫎 ' },
+    -- Width of the heading background:
+    --  block: width of the heading text
+    --  full:  full width of the window
+    -- Can also be a list of the above values in which case the 'level' is used
+    -- to index into the list using a clamp
+    width = 'full',
+    -- Amount of margin to add to the left of headings
+    -- If a floating point value < 1 is provided it is treated as a percentage of the available window space
+    -- Margin available space is computed after accounting for padding
+    -- Can also be a list of numbers in which case the 'level' is used to index into the list using a clamp
+    left_margin = 0,
+    -- Amount of padding to add to the left of headings
+    -- If a floating point value < 1 is provided it is treated as a percentage of the available window space
+    -- Can also be a list of numbers in which case the 'level' is used to index into the list using a clamp
+    left_pad = 0,
+    -- Amount of padding to add to the right of headings when width is 'block'
+    -- If a floating point value < 1 is provided it is treated as a percentage of the available window space
+    -- Can also be a list of numbers in which case the 'level' is used to index into the list using a clamp
+    right_pad = 0,
+    -- Minimum width to use for headings when width is 'block'
+    -- Can also be a list of integers in which case the 'level' is used to index into the list using a clamp
+    min_width = 0,
+    -- Determines if a border is added above and below headings
+    -- Can also be a list of booleans in which case the 'level' is used to index into the list using a clamp
+    border = false,
+    -- Always use virtual lines for heading borders instead of attempting to use empty lines
+    border_virtual = false,
+    -- Highlight the start of the border using the foreground highlight
+    border_prefix = false,
+    -- Used above heading for border
+    above = '▄',
+    -- Used below heading for border
+    below = '▀',
+    -- The 'level' is used to index into the list using a clamp
+    -- Highlight for the heading icon and extends through the entire line
+    backgrounds = {
+      'RenderMarkdownH1Bg',
+      'RenderMarkdownH2Bg',
+      'RenderMarkdownH3Bg',
+      'RenderMarkdownH4Bg',
+      'RenderMarkdownH5Bg',
+      'RenderMarkdownH6Bg',
     },
-    paragraph = {
-        -- Turn on / off paragraph rendering
-        enabled = true,
-        -- Amount of margin to add to the left of paragraphs
-        -- If a floating point value < 1 is provided it is treated as a percentage of the available window space
-        left_margin = 0,
-        -- Minimum width to use for paragraphs
-        min_width = 0,
+    -- The 'level' is used to index into the list using a clamp
+    -- Highlight for the heading and sign icons
+    foregrounds = {
+      'RenderMarkdownH1',
+      'RenderMarkdownH2',
+      'RenderMarkdownH3',
+      'RenderMarkdownH4',
+      'RenderMarkdownH5',
+      'RenderMarkdownH6',
     },
-heading = {
-        -- Turn on / off heading icon & background rendering
-        enabled = true,
-        -- Turn on / off any sign column related rendering
-        sign = true,
-        -- Determines how icons fill the available space:
-        --  right:   '#'s are concealed and icon is appended to right side
-        --  inline:  '#'s are concealed and icon is inlined on left side
-        --  overlay: icon is left padded with spaces and inserted on left hiding any additional '#'
-        position = 'overlay',
-        -- Replaces '#+' of 'atx_h._marker'
-        -- The number of '#' in the heading determines the 'level'
-        -- The 'level' is used to index into the list using a cycle
-        icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
-        -- Added to the sign column if enabled
-        -- The 'level' is used to index into the list using a cycle
-        signs = { '󰫎 ' },
-        -- Width of the heading background:
-        --  block: width of the heading text
-        --  full:  full width of the window
-        -- Can also be a list of the above values in which case the 'level' is used
-        -- to index into the list using a clamp
-        width = 'full',
-        -- Amount of margin to add to the left of headings
-        -- If a floating point value < 1 is provided it is treated as a percentage of the available window space
-        -- Margin available space is computed after accounting for padding
-        -- Can also be a list of numbers in which case the 'level' is used to index into the list using a clamp
-        left_margin = 0,
-        -- Amount of padding to add to the left of headings
-        -- If a floating point value < 1 is provided it is treated as a percentage of the available window space
-        -- Can also be a list of numbers in which case the 'level' is used to index into the list using a clamp
-        left_pad = 0,
-        -- Amount of padding to add to the right of headings when width is 'block'
-        -- If a floating point value < 1 is provided it is treated as a percentage of the available window space
-        -- Can also be a list of numbers in which case the 'level' is used to index into the list using a clamp
-        right_pad = 0,
-        -- Minimum width to use for headings when width is 'block'
-        -- Can also be a list of integers in which case the 'level' is used to index into the list using a clamp
-        min_width = 0,
-        -- Determines if a border is added above and below headings
-        -- Can also be a list of booleans in which case the 'level' is used to index into the list using a clamp
-        border = false,
-        -- Always use virtual lines for heading borders instead of attempting to use empty lines
-        border_virtual = false,
-        -- Highlight the start of the border using the foreground highlight
-        border_prefix = false,
-        -- Used above heading for border
-        above = '▄',
-        -- Used below heading for border
-        below = '▀',
-        -- The 'level' is used to index into the list using a clamp
-        -- Highlight for the heading icon and extends through the entire line
-        backgrounds = {
-            'RenderMarkdownH1Bg',
-            'RenderMarkdownH2Bg',
-            'RenderMarkdownH3Bg',
-            'RenderMarkdownH4Bg',
-            'RenderMarkdownH5Bg',
-            'RenderMarkdownH6Bg',
-        },
-        -- The 'level' is used to index into the list using a clamp
-        -- Highlight for the heading and sign icons
-        foregrounds = {
-            'RenderMarkdownH1',
-            'RenderMarkdownH2',
-            'RenderMarkdownH3',
-            'RenderMarkdownH4',
-            'RenderMarkdownH5',
-            'RenderMarkdownH6',
-        },
-    },
+  },
   code = {
     -- Turn on / off code block & inline code rendering
     enabled = true,

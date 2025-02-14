@@ -3,7 +3,16 @@
 # For a full list, run  `hash -d` (alias `d`).
 
 hash -d d=~/dot
+
 hash -d ya=~/code/youtoogroup/app
 hash -d yi=~/code/youtoogroup/infra
 hash -d ym=~/code/youtoogroup/manifests
+
+hash -d fa=~/flui/AffinityIPM
+hash -d fp=~/flui/IPM_Business_Processes/INABOX-MF
+hash -d fo=~/flui/oracledb
+hash -d fg=~/flui/IPM09-Python
+
+hash -d ae=~/app/jboss-eap-7.4
+hash -d ap=~/app/marketflow/pickup/mf
 

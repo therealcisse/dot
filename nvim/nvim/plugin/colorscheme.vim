@@ -127,7 +127,8 @@ function! s:MyHighlights() abort
   hi! link ElVisualBlock Statusline
 
   hi! Visual guibg=#3a3a3a cterm=italic gui=italic
-  hi! SpecialKey guifg=#333333 guibg=#111111
+  "hi! SpecialKey guifg=#333333 guibg=#111111
+  hi! SpecialKey guifg=#FF0000 guibg=#00FF00 ctermfg=red ctermbg=green
 endfunction
 
 function s:SetColors()

@@ -381,7 +381,7 @@ function kLogs() {
 git_clean_repo() {
   local remove_ignored=false
   local dry_run=false
-  local ignore_globs=("*.scala" "*.java" "*.md" "*.js" "*.sh" "*.zsh" "*.env")
+  local ignore_globs=("*.scala" "*.java" "*.md" "*.js" "*.sh" "*.zsh" "*.env", "*.sbt")
 
   # Process arguments
   while [[ $# -gt 0 ]]; do

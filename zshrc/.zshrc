@@ -203,7 +203,7 @@ test -e $HOME/.zsh/common.private && source $HOME/.zsh/common.private
 test -e $HOME/.zsh/functions.private && source $HOME/.zsh/functions.private
 
 source <(kubectl completion zsh)
-complete -C '/usr/local/bin/aws_completer' aws
+# complete -C '/usr/local/bin/aws_completer' aws
 
 source $(brew --prefix)/share/zsh-autopair/autopair.zsh
 
@@ -268,6 +268,7 @@ export XDG_CONFIG_HOME=$HOME/.config
 alias java21="export JAVA_HOME=`/usr/libexec/java_home -v 21`"
 alias java11="export JAVA_HOME=`/usr/libexec/java_home -v 11`"
 alias java17="export JAVA_HOME=`/usr/libexec/java_home -v 17`"
+alias java8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`"
 
 # export NODE_OPTIONS=--openssl-legacy-provider
 
@@ -290,3 +291,6 @@ fi
 
 eval "$(starship init zsh)"
 
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/therealcisse/.lmstudio/bin"

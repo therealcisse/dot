@@ -43,6 +43,8 @@ return require('lazy').setup({
 	'TovarishFin/vim-solidity',
 	-- { 'tomlion/vim-solidity' }
 
+  { 'mtdl9/vim-log-highlighting' },
+
 	-----------------------------------------------------------
 
 	{ 'famiu/bufdelete.nvim', cmd = 'Bdelete' },
@@ -272,8 +274,8 @@ return require('lazy').setup({
         enabled = true,
         timeout = 3000,
       },
-      quickfile = { enabled = true },
-      statuscolumn = { enabled = true },
+      quickfile = { enabled = false },
+      statuscolumn = { enabled = false },
       words = { enabled = true },
       styles = {
         notification = {
@@ -1024,10 +1026,17 @@ return require('lazy').setup({
               -- 'copilot',
               -- 'luasnip',
               -- 'minuet',
+              -- 'render-markdown',
              }
           end
         end,
         providers = {
+          -- markdown = {
+          --   name = 'RenderMarkdown',
+          --   module = 'render-markdown.integ.blink',
+          --   fallbacks = { 'lsp' },
+          -- },
+
           -- minuet = {
           --   name = 'minuet',
           --   module = 'minuet.blink',
@@ -1447,34 +1456,55 @@ return require('lazy').setup({
     },
   },
 
+  -- {
+  --   'dlants/magenta.nvim',
+  --   lazy = false, -- you could also bind to <leader>mt
+  --   build = "npm install --frozen-lockfile",
+  --   opts = {
+  --     provider = 'openai',
+  --     picker = 'telescope',
+  --     sidebar_position = 'right',
+  --   },
+  -- },
+
   {
     'yetone/avante.nvim',
     event = 'VeryLazy',
     lazy = false,
-    version = false, -- set this if you want to always pull the latest change
+    version = 'v0.0.15', -- set this if you want to always pull the latest change
     opts = {
-      -- provider = 'gemini-2.0-flash-exp',
-      -- provider = 'gemini-exp-1206',
-      provider = 'gemini-2.0-flash-thinking-exp-1219',
-      auto_suggestions_provider = 'copilot',
+      provider = 'gemini',
+      -- provider = 'deepseek',
+      -- auto_suggestions_provider = 'copilot',
       openai = {
         -- endpoint = 'https://api.openai.com/v1/chat/completions',
         model = 'gpt-4o',
         temperature = 1.1,
         max_tokens = 4096,
       },
-      vendors = {
-        ['gemini-2.0-flash-thinking-exp-1219'] = {
-          __inherited_from = 'gemini',
-          endpoint = 'https://generativelanguage.googleapis.com/v1beta/models',
-          -- model = 'gemini-2.0-flash-exp',
-          -- model = 'gemini-exp-1206',
-          model = 'gemini-2.0-flash-thinking-exp-1219',
-          timeout = 30000, -- Timeout in milliseconds
-          temperature = 1.1,
-          max_tokens = 4096,
-        },
+
+      gemini = {
+        endpoint = 'https://generativelanguage.googleapis.com/v1beta/models',
+        -- model = 'gemini-2.0-flash-exp',
+        model = 'gemini-exp-1206',
+        -- model = 'gemini-2.0-flash-thinking-exp-1219',
+        timeout = 30000, -- Timeout in milliseconds
+        temperature = 1.1,
+        max_tokens = 4096,
       },
+
+      deepseek = {
+        endpoint = 'https://api.deepseek.com/v1',
+        model = 'deepseek-chat', -- or "deepseek-coder" for coding tasks
+        timeout = 30000, -- Timeout in milliseconds
+        temperature = 0,
+        max_tokens = 8000,
+        allow_insecure = false,
+      },
+
+      vendors = {
+      },
+
       file_selector = {
         provider = 'telescope',
         -- Options override for custom providers

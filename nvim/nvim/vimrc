@@ -903,7 +903,7 @@ lua << EOF
   -- require "trc.oil"
   require "trc.autopairs"
   require "trc.gitsigns"
-  -- require "trc.winbar"
+  require "trc.winbar"
   -- require "trc.barbecue"
   -- require "trc.indentline"
   require "trc.toggleterm"
