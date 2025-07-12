@@ -763,6 +763,8 @@ set cursorline                 " Highlight the current line.
 set cursorcolumn               " Highlight the current column.
 set cursorlineopt=line,number
 
+set winborder=rounded
+
 " ----------------------------------------------------------------------------
 " HL | Find out syntax group
 " ----------------------------------------------------------------------------
@@ -957,6 +959,14 @@ highlight link LirGitStatusWorktree WarningMsg
 highlight link LirGitStatusUnmerged ErrorMsg
 highlight link LirGitStatusUntracked Comment
 highlight link LirGitStatusIgnored Comment
+
+function! TailFile()
+  set autoread
+  au CursorHold * checktime | call feedkeys("G")
+  normal! G
+endfunction
+
+command! Tail call TailFile()
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |

@@ -1,5 +1,5 @@
 # Nushell Config File
-#
+
 # version = "0.95.0"
 
 # For more information on defining custom themes, see

@@ -341,7 +341,7 @@ local servers = {
   yamlls = require('yaml-companion').setup {
     -- detect k8s schemas based on file content
     builtin_matchers = {
-      kubernetes = { enabled = true }
+      -- kubernetes = { enabled = true }
     },
 
     -- schemas available in Telescope picker
@@ -366,6 +366,8 @@ local servers = {
         name = 'GitHub Workflow',
         uri = 'https://json.schemastore.org/github-workflow.json'
       },
+      -- [require('kubernetes').yamlls_schema()] = "*.yaml",
+      -- [require('kubernetes').yamlls_schema()] = require('kubernetes').yamlls_filetypes()
     },
 
     lspconfig = {

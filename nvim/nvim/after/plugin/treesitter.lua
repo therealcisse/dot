@@ -127,7 +127,7 @@ local _ = require('nvim-treesitter.configs').setup {
     'markdown',
     'markdown_inline',
     'hcl',
-    'dap_repl',
+    -- 'dap_repl',
     'lua',
     'regex',
     'markdown_inline',
@@ -154,11 +154,12 @@ local _ = require('nvim-treesitter.configs').setup {
     -- use_languagetree = false,
     -- -- disable = { 'json' },
     -- custom_captures = custom_captures,
+    disable = { 'Dockerfile' },
   },
 
   indent = {
     enable = true,
-    disable = { 'dart', 'python', 'css', 'html', 'gdscript', 'gdscript3', 'gd' },
+    disable = { 'dart', 'python', 'css', 'html', 'gdscript', 'gdscript3', 'gd', 'Dockerfile' },
   },
 
   refactor = {
@@ -205,54 +206,54 @@ local _ = require('nvim-treesitter.configs').setup {
     },
   },
 
-  textobjects = {
-    move = {
-      enable = true,
-      set_jumps = true,
-
-      goto_next_start = {
-        [']p'] = '@parameter.inner',
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
-      },
-      goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
-      },
-      goto_previous_start = {
-        ['[p'] = '@parameter.inner',
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
-      },
-    },
-
-    select = {
-      enable = true,
-      keymaps = {
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-
-        ['ac'] = '@conditional.outer',
-        ['ic'] = '@conditional.inner',
-
-        ['aa'] = '@parameter.outer',
-        ['ia'] = '@parameter.inner',
-
-        ['av'] = '@variable.outer',
-        ['iv'] = '@variable.inner',
-      },
-    },
-
-    swap = {
-      enable = true,
-      swap_next = swap_next,
-      swap_previous = swap_prev,
-    },
-  },
+  -- textobjects = {
+  --   move = {
+  --     enable = true,
+  --     set_jumps = true,
+  --
+  --     goto_next_start = {
+  --       [']p'] = '@parameter.inner',
+  --       [']m'] = '@function.outer',
+  --       [']]'] = '@class.outer',
+  --     },
+  --     goto_next_end = {
+  --       [']M'] = '@function.outer',
+  --       [']['] = '@class.outer',
+  --     },
+  --     goto_previous_start = {
+  --       ['[p'] = '@parameter.inner',
+  --       ['[m'] = '@function.outer',
+  --       ['[['] = '@class.outer',
+  --     },
+  --     goto_previous_end = {
+  --       ['[M'] = '@function.outer',
+  --       ['[]'] = '@class.outer',
+  --     },
+  --   },
+  --
+  --   select = {
+  --     enable = true,
+  --     keymaps = {
+  --       ['af'] = '@function.outer',
+  --       ['if'] = '@function.inner',
+  --
+  --       ['ac'] = '@conditional.outer',
+  --       ['ic'] = '@conditional.inner',
+  --
+  --       ['aa'] = '@parameter.outer',
+  --       ['ia'] = '@parameter.inner',
+  --
+  --       ['av'] = '@variable.outer',
+  --       ['iv'] = '@variable.inner',
+  --     },
+  --   },
+  --
+  --   swap = {
+  --     enable = true,
+  --     swap_next = swap_next,
+  --     swap_previous = swap_prev,
+  --   },
+  -- },
 
   playground = {
     enable = true,
