@@ -52,6 +52,30 @@ return require('lazy').setup({
 	{
 		'anuvyklack/animation.nvim',
 	},
+
+  {
+    "neoclide/jsonc.vim",
+    ft = { "jsonc" },
+  },
+
+  -- {
+  --   "pmizio/typescript-tools.nvim",
+  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  --   ft = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact" },
+  --   config = function()
+  --     require("typescript-tools").setup({
+  --       settings = {
+  --         separate_diagnostic_server = true,
+  --         expose_as_code_action = { "fix_all", "add_missing_imports", "remove_unused" },
+  --         tsserver_file_preferences = {
+  --           includeInlayParameterNameHints = "literals",
+  --           includeInlayVariableTypeHints = true,
+  --         },
+  --       },
+  --     })
+  --   end,
+  -- },
+
 	{
 		'nvim-zh/colorful-winsep.nvim',
 		config = function()
@@ -131,20 +155,20 @@ return require('lazy').setup({
   'google/vim-jsonnet',
   'b0o/schemastore.nvim',
   {
-    "mason-org/mason.nvim",
+    'mason-org/mason.nvim',
     opts = {}
   },
-  {
-    'anasinnyk/nvim-k8s-crd',
-    event = { 'BufEnter *.yaml' },
-    dependencies = { 'neovim/nvim-lspconfig' },
-    opts = {
-      cache_dir = "~/.cache/k8s-schemas/",
-      k8s = {
-        file_mask = "*.yaml",
-      }
-    },
-  },
+  -- {
+  --   'anasinnyk/nvim-k8s-crd',
+  --   event = { 'BufEnter *.yaml' },
+  --   dependencies = { 'neovim/nvim-lspconfig' },
+  --   opts = {
+  --     cache_dir = '~/.cache/k8s-schemas/',
+  --     k8s = {
+  --       file_mask = '*.yaml',
+  --     }
+  --   },
+  -- },
   -- {
   --   'diogo464/kubernetes.nvim',
   --   opts = {
@@ -214,11 +238,11 @@ return require('lazy').setup({
 
 	-- Contributor Plugins
   {
-    "L3MON4D3/LuaSnip",
+    'L3MON4D3/LuaSnip',
     -- follow latest release.
-    version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+    version = 'v2.*', -- Replace <CurrentMajor> by the latest released major (first number of latest release)
     -- install jsregexp (optional!).
-    build = "make install_jsregexp"
+    build = 'make install_jsregexp'
   },
 	{ 'Vigemus/iron.nvim' },
 
@@ -539,6 +563,16 @@ return require('lazy').setup({
 	-- 		})
 	-- 	end,
 	-- },
+
+  {
+    "vague2k/vague.nvim",
+    config = function()
+      -- NOTE: you do not need to call setup if you don't want to.
+      -- require('vague').setup({
+      --   -- optional configuration here
+      -- })
+    end
+  },
 
 	{
 		'kylechui/nvim-surround',
@@ -868,8 +902,8 @@ return require('lazy').setup({
   },
 
   -- {
-  --   "folke/edgy.nvim",
-  --   event = "VeryLazy",
+  --   'folke/edgy.nvim',
+  --   event = 'VeryLazy',
   --   opts = {}
   -- },
 
@@ -1129,18 +1163,18 @@ return require('lazy').setup({
           --   score_offset = 85,
           --   max_items = 8,
           --   -- Only show luasnip items if I type the trigger_text characters, so
-          --   -- to expand the "bash" snippet, if the trigger_text is ";" I have to
-          --   -- type ";bash"
+          --   -- to expand the 'bash' snippet, if the trigger_text is ';' I have to
+          --   -- type ';bash'
           --   should_show_items = function()
           --     local col = vim.api.nvim_win_get_cursor(0)[2]
           --     local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
           --     -- NOTE: remember that `trigger_text` is modified at the top of the file
-          --     return before_cursor:match(trigger_text .. "%w*$") ~= nil
+          --     return before_cursor:match(trigger_text .. '%w*$') ~= nil
           --   end,
           --   -- After accepting the completion, delete the trigger_text characters
           --   -- from the final inserted text
           --   transform_items = function(ctx, items)
-          --     -- WARNING: Explicitly referencing ctx otherwise I was getting an "unused" warning
+          --     -- WARNING: Explicitly referencing ctx otherwise I was getting an 'unused' warning
           --     local _ = ctx
           --     local col = vim.api.nvim_win_get_cursor(0)[2]
           --     local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
@@ -1150,8 +1184,8 @@ return require('lazy').setup({
           --         item.textEdit = {
           --           newText = item.insertText or item.label,
           --           range = {
-          --             start = { line = vim.fn.line(".") - 1, character = trigger_pos - 1 },
-          --             ["end"] = { line = vim.fn.line(".") - 1, character = col },
+          --             start = { line = vim.fn.line('.') - 1, character = trigger_pos - 1 },
+          --             ['end'] = { line = vim.fn.line('.') - 1, character = col },
           --           },
           --         }
           --       end
@@ -1160,7 +1194,7 @@ return require('lazy').setup({
           --     -- Otherwise really crazy shit happens and I spent way too much time
           --     -- figurig this out
           --     vim.schedule(function()
-          --       require("blink.cmp").reload("luasnip")
+          --       require('blink.cmp').reload('luasnip')
           --     end)
           --     return items
           --   end,
@@ -1182,7 +1216,7 @@ return require('lazy').setup({
               trailing_slash = false,
               label_trailing_slash = true,
               get_cwd = function(context)
-                return vim.fn.expand(("#%d:p:h"):format(context.bufnr))
+                return vim.fn.expand(('#%d:p:h'):format(context.bufnr))
               end,
               show_hidden_files_by_default = true,
             },
@@ -1375,9 +1409,9 @@ return require('lazy').setup({
   --     })
   --
   --     vim.api.nvim_create_autocmd('BufEnter', {
-  --       pattern = "copilot-*",
+  --       pattern = 'copilot-*',
   --       callback = function()
-  --         vim.bo.completeopt = "menuone,noinsert,popup"
+  --         vim.bo.completeopt = 'menuone,noinsert,popup'
   --       end
   --     })
   --
@@ -1395,7 +1429,7 @@ return require('lazy').setup({
   --     },
   --     {
   --       '<leader>gp',
-  --       ':lua require("CopilotChat.integrations.telescope").pick(require("CopilotChat.actions").prompt_actions({selection = require("CopilotChat.select").visual}))<CR>',
+  --       ':lua require('CopilotChat.integrations.telescope').pick(require('CopilotChat.actions').prompt_actions({selection = require('CopilotChat.select').visual}))<CR>',
   --       mode = 'x',
   --       desc = 'CopilotChat - Prompt actions',
   --     },
@@ -1459,7 +1493,7 @@ return require('lazy').setup({
   -- {
   --   'dlants/magenta.nvim',
   --   lazy = false, -- you could also bind to <leader>mt
-  --   build = "npm install --frozen-lockfile",
+  --   build = 'npm install --frozen-lockfile',
   --   opts = {
   --     provider = 'openai',
   --     picker = 'telescope',
@@ -1468,13 +1502,13 @@ return require('lazy').setup({
   -- },
 
   {
-    "ravitemer/mcphub.nvim",
+    'ravitemer/mcphub.nvim',
     dependencies = {
-      "nvim-lua/plenary.nvim",
+      'nvim-lua/plenary.nvim',
     },
-    build = "npm install -g mcp-hub@latest",  -- Installs `mcp-hub` node binary globally
+    build = 'npm install -g mcp-hub@latest',  -- Installs `mcp-hub` node binary globally
     config = function()
-      require("mcphub").setup {
+      require('mcphub').setup {
         extensions = {
           avante = {
             make_slash_commands = true, -- make /slash commands from MCP server prompts
@@ -1482,6 +1516,66 @@ return require('lazy').setup({
         },
       }
     end
+  },
+
+  {
+    'cbochs/grapple.nvim',
+    opts = {
+        scope = 'git', -- also try out 'git_branch'
+        icons = true,
+        status = false,
+    },
+    keys = {
+        { '<leader>g', '<cmd>Grapple toggle<cr>', desc = 'Tag a file' },
+        { '<c-e>', '<cmd>Grapple toggle_tags<cr>', desc = 'Toggle tags menu' },
+
+        { '<c-h>', '<cmd>Grapple select index=1<cr>', desc = 'Select first tag' },
+        { '<c-t>', '<cmd>Grapple select index=2<cr>', desc = 'Select second tag' },
+        { '<c-n>', '<cmd>Grapple select index=3<cr>', desc = 'Select third tag' },
+        { '<c-s>', '<cmd>Grapple select index=4<cr>', desc = 'Select fourth tag' },
+
+        { '<c-s-n>', '<cmd>Grapple cycle_tags next<cr>', desc = 'Go to next tag' },
+        { '<c-s-p>', '<cmd>Grapple cycle_tags prev<cr>', desc = 'Go to previous tag' },
+    },
+    dependencies = {
+      { 'nvim-tree/nvim-web-devicons', lazy = true }
+    },
+  },
+
+  {
+    'NickvanDyke/opencode.nvim',
+    dependencies = {
+      'folke/snacks.nvim',
+    },
+    ---@type opencode.Config
+    opts = {
+      -- Your configuration, if any
+      context = {
+        ---@return string|nil
+        ['@grapple'] = function()
+          local paths = {}
+          for _, tag in ipairs(require('grapple').tags() or {}) do
+            table.insert(paths, tag.path)
+          end
+          return table.concat(paths, ', ')
+        end,
+      },
+    },
+    -- stylua: ignore
+    keys = {
+      -- opencode.nvim exposes a general, flexible API — customize it to your workflow!
+      -- But here are some examples to get you started :)
+      { '<leader>ot', function() require('opencode').toggle() end, desc = 'Toggle opencode', },
+      { '<leader>oa', function() require('opencode').ask() end, desc = 'Ask opencode', mode = { 'n', 'v' }, },
+      { '<leader>oA', function() require('opencode').ask('@file ') end, desc = 'Ask opencode about current file', mode = { 'n', 'v' }, },
+      { '<leader>on', function() require('opencode').command('/new') end, desc = 'New session', },
+      { '<leader>oe', function() require('opencode').prompt('Explain @cursor and its context') end, desc = 'Explain code near cursor' },
+      { '<leader>or', function() require('opencode').prompt('Review @file for correctness and readability') end, desc = 'Review file', },
+      { '<leader>of', function() require('opencode').prompt('Fix these @diagnostics') end, desc = 'Fix errors', },
+      { '<leader>oo', function() require('opencode').prompt('Optimize @selection for performance and readability') end, desc = 'Optimize selection', mode = 'v', },
+      { '<leader>od', function() require('opencode').prompt('Add documentation comments for @selection') end, desc = 'Document selection', mode = 'v', },
+      { '<leader>ot', function() require('opencode').prompt('Add tests for @selection') end, desc = 'Test selection', mode = 'v', },
+    },
   },
 
   {
@@ -1504,7 +1598,7 @@ return require('lazy').setup({
     --       openai = {
     --         -- endpoint = 'https://api.openai.com/v1/chat/completions',
     --         model = 'gpt-4o',
-    --         api_key = vim.fn.getenv("OPENAI_API_KEY"),
+    --         api_key = vim.fn.getenv('OPENAI_API_KEY'),
     --         -- temperature = 1.1,
     --         -- max_tokens = 4096,
     --         -- reasoning_effort = 'high',
@@ -1512,7 +1606,7 @@ return require('lazy').setup({
     --
     --       gemini = {
     --         -- endpoint = 'https://generativelanguage.googleapis.com/v1beta/models',
-    --         api_key = vim.fn.getenv("GEMINI_API_KEY"),
+    --         api_key = vim.fn.getenv('GEMINI_API_KEY'),
     --         -- model = 'gemini-2.0-flash-exp',
     --         -- model = 'gemini-exp-1206',
     --         -- model = 'gemini-2.0-flash-thinking-exp-1219',
@@ -1539,21 +1633,21 @@ return require('lazy').setup({
     --     -- system_prompt as function ensures LLM always has latest MCP server state
     --     -- This is evaluated for every message, even in existing chats
     --     system_prompt = function()
-    --       local hub = require("mcphub").get_hub_instance()
-    --       return hub and hub:get_active_servers_prompt() or ""
+    --       local hub = require('mcphub').get_hub_instance()
+    --       return hub and hub:get_active_servers_prompt() or ''
     --     end,
     --     -- Using function prevents requiring mcphub before it's loaded
     --     custom_tools = function()
     --       return {
-    --         require("mcphub.extensions.avante").mcp_tool(),
+    --         require('mcphub.extensions.avante').mcp_tool(),
     --       }
     --     end,
     --   })
     -- end,
 
     opts = {
-      -- provider = 'openai',
-      provider = 'gemini',
+      provider = 'openai',
+      -- provider = 'gemini',
       -- provider = 'openai',
       -- provider = 'deepseek',
       -- auto_suggestions_provider = 'copilot',
@@ -1565,7 +1659,7 @@ return require('lazy').setup({
         openai = {
           -- endpoint = 'https://api.openai.com/v1/chat/completions',
           model = 'gpt-4o',
-          api_key = vim.fn.getenv("OPENAI_API_KEY"),
+          api_key = vim.fn.getenv('OPENAI_API_KEY'),
           -- temperature = 1.1,
           -- max_tokens = 4096,
           -- reasoning_effort = 'high',
@@ -1573,15 +1667,15 @@ return require('lazy').setup({
 
         gemini = {
           -- endpoint = 'https://generativelanguage.googleapis.com/v1beta/models',
-          api_key = vim.fn.getenv("GEMINI_API_KEY"),
+          api_key = vim.fn.getenv('GEMINI_API_KEY'),
           -- model = 'gemini-2.0-flash-exp',
           -- model = 'gemini-exp-1206',
           -- model = 'gemini-2.0-flash-thinking-exp-1219',
           -- model = 'gemini-2.5-pro-exp-1219',
           -- model = 'gemini-2.5-pro',
-          timeout = 30000, -- Timeout in milliseconds
-          temperature = 1.1,
-          max_tokens = 4096,
+          -- timeout = 30000, -- Timeout in milliseconds
+          -- temperature = 1.1,
+          -- max_tokens = 4096,
         },
 
       },
@@ -1601,13 +1695,13 @@ return require('lazy').setup({
       -- system_prompt as function ensures LLM always has latest MCP server state
       -- This is evaluated for every message, even in existing chats
       system_prompt = function()
-        local hub = require("mcphub").get_hub_instance()
-        return hub and hub:get_active_servers_prompt() or ""
+        local hub = require('mcphub').get_hub_instance()
+        return hub and hub:get_active_servers_prompt() or ''
       end,
       -- Using function prevents requiring mcphub before it's loaded
       custom_tools = function()
         return {
-          require("mcphub.extensions.avante").mcp_tool(),
+          require('mcphub.extensions.avante').mcp_tool(),
         }
       end,
     },
@@ -1659,9 +1753,9 @@ return require('lazy').setup({
     },
   },
   {
-    "monkoose/matchparen.nvim",
+    'monkoose/matchparen.nvim',
     config = function()
-      require("matchparen").setup()
+      require('matchparen').setup()
     end,
   },
 

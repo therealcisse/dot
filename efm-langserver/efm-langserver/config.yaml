@@ -1,0 +1,14 @@
+tools:
+  mypy: &mypy
+    lint-command: "mypy --show-column-numbers --no-color-output --no-error-summary --follow-imports=skip"
+    lint-stdin: false
+    lint-formats:
+      - "%f:%l:%c: %t%*[^:]: %m"
+    root-markers:
+      - mypy.ini
+      - pyproject.toml
+      - setup.py
+
+languages:
+  python:
+    - <<: *mypy

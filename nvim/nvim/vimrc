@@ -55,6 +55,8 @@ scriptencoding utf-8
 
 set ttyfast
 
+set winborder=rounded
+
 set mouse=a
 set mousemodel=extend
 

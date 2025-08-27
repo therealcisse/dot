@@ -67,6 +67,10 @@ local filetype_attach = setmetatable({
 
 	lua_ls = function() end,
 
+  ts_ls = function ()
+
+  end,
+
 	-- dartls = function()
 	--   autocmd_format(true)
 	-- end,
@@ -291,6 +295,28 @@ local servers = {
   },
 	-- vimls = true,
 	-- eslint = true,
+
+  ts_ls = {
+    -- on_attach = on_attach,
+    -- capabilities = capabilities,
+    settings = {
+      -- You can tune tsserver via typescript-language-server settings
+      typescript = {
+        inlayHints = {
+          includeInlayParameterNameHints = "literals",
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = false,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        },
+      },
+      javascript = {
+        inlayHints = { includeInlayParameterNameHints = "literals" },
+      },
+    },
+  },
 
   jsonls = {
     settings = {
