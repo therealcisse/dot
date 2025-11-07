@@ -71,3 +71,5 @@ keybind = ctrl+alt+g>z=toggle_split_zoom
 
 keybind = ctrl+alt+g>e=equalize_splits
 
+split-divider-color = #ffffff
+

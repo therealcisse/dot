@@ -732,14 +732,6 @@ return require('lazy').setup({
 
   'rlane/pounce.nvim',
 
-  -- {
-  --   'olimorris/codecompanion.nvim',
-  --   dependencies = {
-  --     'nvim-lua/plenary.nvim',
-  --     'nvim-treesitter/nvim-treesitter',
-  --   },
-  -- },
-
   {
     'MeanderingProgrammer/render-markdown.nvim',
     opts = {
@@ -767,47 +759,53 @@ return require('lazy').setup({
       local conf = {
         openai_api_key = os.getenv('OPENAI_API_KEY'),
 
-        default_command_agent = 'CodeGemini',
-        default_chat_agent = 'CodeGemini',
+        default_command_agent = 'openai',
+        default_chat_agent = 'openai',
 
         providers = {
-          googleai = {
-            disable = false,
-            endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/{{model}}:streamGenerateContent?key={{secret}}',
-            secret = os.getenv('GOOGLEAI_API_KEY'),
+          openai = {
+            endpoint = "https://api.openai.com/v1/chat/completions",
+            secret = os.getenv("OPENAI_API_KEY"),
           },
+
+          -- azure = {...},
+
+          -- copilot = {
+          --   endpoint = "https://api.githubcopilot.com/chat/completions",
+          --   secret = {
+          --     "bash",
+          --     "-c",
+          --     "cat ~/.config/github-copilot/apps.json | sed -e 's/.*oauth_token...//;s/\".*//'",
+          --   },
+          -- },
+          --
+          -- pplx = {
+          --   endpoint = "https://api.perplexity.ai/chat/completions",
+          --   secret = os.getenv("PPLX_API_KEY"),
+          -- },
+          --
+          -- ollama = {
+          --   endpoint = "http://localhost:11434/v1/chat/completions",
+          -- },
+          --
+          -- googleai = {
+          --   endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{{model}}:streamGenerateContent?key={{secret}}",
+          --   secret = os.getenv("GOOGLEAI_API_KEY"),
+          -- },
+          --
+          -- anthropic = {
+          --   endpoint = "https://api.anthropic.com/v1/messages",
+          --   secret = os.getenv("ANTHROPIC_API_KEY"),
+          -- },
         },
 
         agents = {
           {
-            name = 'ChatGPT4o',
+            name = 'ChatGPT',
             chat = true,
             command = false,
             -- string with model name or table with model name and parameters
-            model = { model = 'gpt-4o', temperature = 1.1, top_p = 1 },
-            -- system prompt (use this to specify the persona/role of the AI)
-            system_prompt = require('gp.defaults').chat_system_prompt,
-          },
-          {
-            provider = 'openai',
-            name = 'ChatGPT4o-mini',
-            chat = true,
-            command = false,
-            -- string with model name or table with model name and parameters
-            model = { model = 'gpt-4o-mini', temperature = 1.1, top_p = 1 },
-            -- system prompt (use this to specify the persona/role of the AI)
-            system_prompt = require('gp.defaults').chat_system_prompt,
-          },
-          {
-            provider = 'googleai',
-            name = 'ChatGemini',
-            chat = true,
-            command = false,
-            -- string with model name or table with model name and parameters
-            -- model = { model = 'gemini-pro', temperature = 1.1, top_p = 1 },
-            -- model = { model = 'gemini-2.0-flash-exp', temperature = 1.1, top_p = 1 },
-            -- model = { model = 'gemini-exp-1206', temperature = 1.1, top_p = 1 },
-            model = { model = 'gemini-2.0-flash-thinking-exp-1219', temperature = 1.1, top_p = 1 },
+            model = { model = 'gpt-5' },
             -- system prompt (use this to specify the persona/role of the AI)
             system_prompt = require('gp.defaults').chat_system_prompt,
           },
@@ -1502,23 +1500,6 @@ return require('lazy').setup({
   -- },
 
   {
-    'ravitemer/mcphub.nvim',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
-    build = 'npm install -g mcp-hub@latest',  -- Installs `mcp-hub` node binary globally
-    config = function()
-      require('mcphub').setup {
-        extensions = {
-          avante = {
-            make_slash_commands = true, -- make /slash commands from MCP server prompts
-          }
-        },
-      }
-    end
-  },
-
-  {
     'cbochs/grapple.nvim',
     opts = {
         scope = 'git', -- also try out 'git_branch'
@@ -1542,216 +1523,6 @@ return require('lazy').setup({
     },
   },
 
-  {
-    'NickvanDyke/opencode.nvim',
-    dependencies = {
-      'folke/snacks.nvim',
-    },
-    ---@type opencode.Config
-    opts = {
-      -- Your configuration, if any
-      context = {
-        ---@return string|nil
-        ['@grapple'] = function()
-          local paths = {}
-          for _, tag in ipairs(require('grapple').tags() or {}) do
-            table.insert(paths, tag.path)
-          end
-          return table.concat(paths, ', ')
-        end,
-      },
-    },
-    -- stylua: ignore
-    keys = {
-      -- opencode.nvim exposes a general, flexible API — customize it to your workflow!
-      -- But here are some examples to get you started :)
-      { '<leader>ot', function() require('opencode').toggle() end, desc = 'Toggle opencode', },
-      { '<leader>oa', function() require('opencode').ask() end, desc = 'Ask opencode', mode = { 'n', 'v' }, },
-      { '<leader>oA', function() require('opencode').ask('@file ') end, desc = 'Ask opencode about current file', mode = { 'n', 'v' }, },
-      { '<leader>on', function() require('opencode').command('/new') end, desc = 'New session', },
-      { '<leader>oe', function() require('opencode').prompt('Explain @cursor and its context') end, desc = 'Explain code near cursor' },
-      { '<leader>or', function() require('opencode').prompt('Review @file for correctness and readability') end, desc = 'Review file', },
-      { '<leader>of', function() require('opencode').prompt('Fix these @diagnostics') end, desc = 'Fix errors', },
-      { '<leader>oo', function() require('opencode').prompt('Optimize @selection for performance and readability') end, desc = 'Optimize selection', mode = 'v', },
-      { '<leader>od', function() require('opencode').prompt('Add documentation comments for @selection') end, desc = 'Document selection', mode = 'v', },
-      { '<leader>ot', function() require('opencode').prompt('Add tests for @selection') end, desc = 'Test selection', mode = 'v', },
-    },
-  },
-
-  {
-    'yetone/avante.nvim',
-    event = 'VeryLazy',
-    lazy = false,
-    -- version = 'v0.0.15', -- set this if you want to always pull the latest change
-    -- config = function ()
-    --   require('avante').setup({
-    --     provider = 'openai',
-    --     -- provider = 'gemini',
-    --     -- provider = 'openai',
-    --     -- provider = 'deepseek',
-    --     -- auto_suggestions_provider = 'copilot',
-    --
-    --     vendors = {
-    --     },
-    --
-    --     providers = {
-    --       openai = {
-    --         -- endpoint = 'https://api.openai.com/v1/chat/completions',
-    --         model = 'gpt-4o',
-    --         api_key = vim.fn.getenv('OPENAI_API_KEY'),
-    --         -- temperature = 1.1,
-    --         -- max_tokens = 4096,
-    --         -- reasoning_effort = 'high',
-    --       },
-    --
-    --       gemini = {
-    --         -- endpoint = 'https://generativelanguage.googleapis.com/v1beta/models',
-    --         api_key = vim.fn.getenv('GEMINI_API_KEY'),
-    --         -- model = 'gemini-2.0-flash-exp',
-    --         -- model = 'gemini-exp-1206',
-    --         -- model = 'gemini-2.0-flash-thinking-exp-1219',
-    --         -- model = 'gemini-2.5-pro-exp-1219',
-    --         -- model = 'gemini-2.5-pro',
-    --         timeout = 30000, -- Timeout in milliseconds
-    --         temperature = 1.1,
-    --         max_tokens = 4096,
-    --       },
-    --
-    --     },
-    --
-    --     file_selector = {
-    --       provider = 'telescope',
-    --       -- Options override for custom providers
-    --       provider_opts = {},
-    --     },
-    --     behaviour = {
-    --       close = { 'q' },
-    --       auto_focus_sidebar = true,
-    --       auto_suggestions_respect_ignore = true,
-    --     },
-    --
-    --     -- system_prompt as function ensures LLM always has latest MCP server state
-    --     -- This is evaluated for every message, even in existing chats
-    --     system_prompt = function()
-    --       local hub = require('mcphub').get_hub_instance()
-    --       return hub and hub:get_active_servers_prompt() or ''
-    --     end,
-    --     -- Using function prevents requiring mcphub before it's loaded
-    --     custom_tools = function()
-    --       return {
-    --         require('mcphub.extensions.avante').mcp_tool(),
-    --       }
-    --     end,
-    --   })
-    -- end,
-
-    opts = {
-      provider = 'openai',
-      -- provider = 'gemini',
-      -- provider = 'openai',
-      -- provider = 'deepseek',
-      -- auto_suggestions_provider = 'copilot',
-
-      vendors = {
-      },
-
-      providers = {
-        openai = {
-          -- endpoint = 'https://api.openai.com/v1/chat/completions',
-          model = 'gpt-4o',
-          api_key = vim.fn.getenv('OPENAI_API_KEY'),
-          -- temperature = 1.1,
-          -- max_tokens = 4096,
-          -- reasoning_effort = 'high',
-        },
-
-        gemini = {
-          -- endpoint = 'https://generativelanguage.googleapis.com/v1beta/models',
-          api_key = vim.fn.getenv('GEMINI_API_KEY'),
-          -- model = 'gemini-2.0-flash-exp',
-          -- model = 'gemini-exp-1206',
-          -- model = 'gemini-2.0-flash-thinking-exp-1219',
-          -- model = 'gemini-2.5-pro-exp-1219',
-          -- model = 'gemini-2.5-pro',
-          -- timeout = 30000, -- Timeout in milliseconds
-          -- temperature = 1.1,
-          -- max_tokens = 4096,
-        },
-
-      },
-
-      file_selector = {
-        provider = 'telescope',
-        -- Options override for custom providers
-        provider_opts = {},
-      },
-      behaviour = {
-        close = { 'q' },
-        auto_focus_sidebar = true,
-        auto_suggestions_respect_ignore = true,
-      },
-
-
-      -- system_prompt as function ensures LLM always has latest MCP server state
-      -- This is evaluated for every message, even in existing chats
-      system_prompt = function()
-        local hub = require('mcphub').get_hub_instance()
-        return hub and hub:get_active_servers_prompt() or ''
-      end,
-      -- Using function prevents requiring mcphub before it's loaded
-      custom_tools = function()
-        return {
-          require('mcphub.extensions.avante').mcp_tool(),
-        }
-      end,
-    },
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    build = 'make',
-    -- build = 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false' -- for windows
-    dependencies = {
-      'stevearc/dressing.nvim',
-      'nvim-lua/plenary.nvim',
-      'MunifTanjim/nui.nvim',
-      --- The below dependencies are optional,
-      'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
-      -- {
-      --   'zbirenbaum/copilot.lua',
-      --   cmd = 'Copilot',
-      --   event = 'InsertEnter',
-      --   config = function()
-      --     require('copilot').setup({
-      --       suggestion = { enabled = false },
-      --       panel = { enabled = false },
-      --       filetypes = {
-      --         scala = true, -- allow specific filetype
-      --         -- javascript = true, -- allow specific filetype
-      --         -- typescript = true, -- allow specific filetype
-      --         -- dart = true, -- allow specific filetype
-      --         ['*'] = false, -- disable for all other filetypes and ignore default `filetypes`
-      --       },
-      --     })
-      --
-      --   end,
-      -- }, -- for providers='copilot'
-      -- {
-      --    -- support for image pasting
-      --   'HakonHarnes/img-clip.nvim',
-      --   event = 'VeryLazy',
-      --   opts = {
-      --     -- recommended settings
-      --     default = {
-      --       embed_image_as_base64 = false,
-      --       prompt_for_file_name = false,
-      --       drag_and_drop = {
-      --         insert_mode = true,
-      --       },
-      --       -- required for Windows users
-      --       use_absolute_path = true,
-      --     },
-      --   },
-      -- },
-    },
-  },
   {
     'monkoose/matchparen.nvim',
     config = function()

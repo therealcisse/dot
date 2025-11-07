@@ -56,6 +56,10 @@ if.app-name-regex-substring = 'finder'
 run = 'layout floating'
 
 [[on-window-detected]]
+if.app-name-regex-substring = 'whatsapp'
+run = 'layout floating'
+
+[[on-window-detected]]
 if.app-name-regex-substring = 'safari'
 run = 'layout floating'
 
@@ -99,10 +103,10 @@ preset = 'qwerty'
 [gaps]
 inner.horizontal = 10
 inner.vertical =   10
-outer.left =       10
+outer.left =       30
 outer.bottom =     10
 outer.top =        10
-outer.right =      10
+outer.right =      30
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -184,22 +188,22 @@ alt-shift-n = 'move-node-to-monitor --focus-follows-window --wrap-around left'
 alt-shift-m = 'move-node-to-monitor --focus-follows-window --wrap-around right'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-alt-enter = 'mode apps'
-alt-semicolon = 'mode service'
+# alt-enter = 'mode apps'
+# alt-semicolon = 'mode service'
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
-[mode.service.binding]
-esc = ['reload-config', 'mode main']
-r = ['flatten-workspace-tree', 'mode main'] # reset layout
-f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
-backspace = ['close-all-windows-but-current', 'mode main']
-
-[mode.apps.binding]
-a = ['exec-and-forget open -a /Applications/Arc.app', 'mode main']
-w = ['exec-and-forget open -a /Applications/WezTerm.app', 'mode main']
-g = ['exec-and-forget open -a /Applications/Ghostty.app', 'mode main']
-s = ['exec-and-forget open -a /Applications/Safari.app', 'mode main']
-d = ['exec-and-forget open -a /Applications/Docker.app', 'mode main']
-m = ['exec-and-forget open -a /Applications/Mail.app', 'mode main']
+# [mode.service.binding]
+# esc = ['reload-config', 'mode main']
+# r = ['flatten-workspace-tree', 'mode main'] # reset layout
+# f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+# backspace = ['close-all-windows-but-current', 'mode main']
+#
+# [mode.apps.binding]
+# a = ['exec-and-forget open -a /Applications/Arc.app', 'mode main']
+# w = ['exec-and-forget open -a /Applications/WezTerm.app', 'mode main']
+# g = ['exec-and-forget open -a /Applications/Ghostty.app', 'mode main']
+# s = ['exec-and-forget open -a /Applications/Safari.app', 'mode main']
+# d = ['exec-and-forget open -a /Applications/Docker.app', 'mode main']
+# m = ['exec-and-forget open -a /Applications/Mail.app', 'mode main']
 

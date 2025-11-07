@@ -38,7 +38,11 @@ metals_config.init_options.statusBarProvider = 'on'
 
 
 -- Example if you are using cmp how to make sure the correct capabilities for snippets are set
-metals_config.capabilities = lsp.capabilities
+local metals_caps = vim.deepcopy(lsp.capabilities)
+metals_caps.workspace = metals_caps.workspace or {}
+metals_caps.workspace.didChangeWatchedFiles = { dynamicRegistration = false }
+
+metals_config.capabilities = metals_caps
 
 metals_config.on_attach = function(client, bufnr)
   lsp.on_attach(client, bufnr)
