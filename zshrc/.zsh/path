@@ -106,8 +106,8 @@ prepend_to PATH /opt/async-profiler-3.0-linux-arm64/bin/
 prepend_to PATH ${KREW_ROOT:-$HOME/.krew}/bin
 prepend_to PATH $HOME/.rd/bin
 prepend_to PATH $HOME/instantclient_23_3
-prepend_to PAHT $HOME/linuxbrew/.linuxbrew/bin
-prepend_to PAHT $HOME/.local/bin
+prepend_to PATH $HOME/linuxbrew/.linuxbrew/bin
+prepend_to PATH $HOME/.local/bin
 
 # If you ever want to see this in easy-to-read form: `echo $PATH | tr : '\n'`
 export PATH
