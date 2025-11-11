@@ -1,4 +1,9 @@
-export TERM=xterm-ghostty
+# Set TERM to xterm-ghostty if available, otherwise fall back to xterm-256color
+if infocmp xterm-ghostty &>/dev/null; then
+  export TERM=xterm-ghostty
+else
+  export TERM=xterm-256color
+fi
 
 # # Create a hash table for globally stashing variables without polluting main
 # scope with a bunch of identifiers.
