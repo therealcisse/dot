@@ -207,6 +207,11 @@ source $HOME/.zsh/vars
 test -e $HOME/.zsh/common.private && source $HOME/.zsh/common.private
 test -e $HOME/.zsh/functions.private && source $HOME/.zsh/functions.private
 
+# Local and host-specific overrides.
+
+LOCAL_RC=$HOME/.zshrc.local
+test -f $LOCAL_RC && source $LOCAL_RC
+
 if command -v kubectl >/dev/null 2>&1; then
   source <(kubectl completion zsh)
 fi
@@ -248,11 +253,6 @@ bindkey -M vicmd 'j' history-substring-search-down
 if [ -n "$DISPLAY" ]; then
   export DISPLAY=:0
 fi
-
-# Local and host-specific overrides.
-
-LOCAL_RC=$HOME/.zshrc.local
-test -f $LOCAL_RC && source $LOCAL_RC
 
 HOST_RC=$HOME/.zsh/host/$(hostname -s)
 test -f $HOST_RC && source $HOST_RC
