@@ -76,44 +76,44 @@ return require('lazy').setup({
   --   end,
   -- },
 
-  {
-    "ojroques/nvim-osc52",
-    config = function()
-      local osc52 = require("osc52")
-
-      osc52.setup {
-        max_length = 0,
-        silent = true,
-        trim = false,
-      }
-
-      -- Optional: make yanking use OSC52 automatically
-      local function copy(lines, _)
-        osc52.copy(table.concat(lines, "\n"))
-      end
-
-      local function paste()
-        return { vim.fn.getreg('"'), vim.fn.getregtype('"') }
-      end
-
-      vim.g.clipboard = {
-        name = "osc52",
-        copy = { ["+"] = copy, ["*"] = copy },
-        paste = { ["+"] = paste, ["*"] = paste },
-      }
-
-      -- Convenience mappings
-      vim.keymap.set("n", "<leader>y", function()
-        osc52.copy_register("+")
-      end, { desc = "Copy to system clipboard via OSC52" })
-      vim.keymap.set("v", "<leader>y", function()
-        osc52.copy_visual()
-      end, { desc = "Copy visual selection via OSC52" })
-
-      -- Use system clipboard as default
-      vim.opt.clipboard = "unnamedplus"
-    end,
-  },
+  -- {
+  --   "ojroques/nvim-osc52",
+  --   config = function()
+  --     local osc52 = require("osc52")
+  --
+  --     osc52.setup {
+  --       max_length = 0,
+  --       silent = true,
+  --       trim = false,
+  --     }
+  --
+  --     -- Optional: make yanking use OSC52 automatically
+  --     local function copy(lines, _)
+  --       osc52.copy(table.concat(lines, "\n"))
+  --     end
+  --
+  --     local function paste()
+  --       return { vim.fn.getreg('"'), vim.fn.getregtype('"') }
+  --     end
+  --
+  --     vim.g.clipboard = {
+  --       name = "osc52",
+  --       copy = { ["+"] = copy, ["*"] = copy },
+  --       paste = { ["+"] = paste, ["*"] = paste },
+  --     }
+  --
+  --     -- Convenience mappings
+  --     vim.keymap.set("n", "<leader>y", function()
+  --       osc52.copy_register("+")
+  --     end, { desc = "Copy to system clipboard via OSC52" })
+  --     vim.keymap.set("v", "<leader>y", function()
+  --       osc52.copy_visual()
+  --     end, { desc = "Copy visual selection via OSC52" })
+  --
+  --     -- Use system clipboard as default
+  --     vim.opt.clipboard = "unnamedplus"
+  --   end,
+  -- },
 
 	{
 		'nvim-zh/colorful-winsep.nvim',

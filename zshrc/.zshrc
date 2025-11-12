@@ -207,7 +207,9 @@ source $HOME/.zsh/vars
 test -e $HOME/.zsh/common.private && source $HOME/.zsh/common.private
 test -e $HOME/.zsh/functions.private && source $HOME/.zsh/functions.private
 
-source <(kubectl completion zsh)
+if command -v kubectl >/dev/null 2>&1; then
+  source <(kubectl completion zsh)
+fi
 # complete -C '/usr/local/bin/aws_completer' aws
 
 source $(brew --prefix)/share/zsh-autopair/autopair.zsh
