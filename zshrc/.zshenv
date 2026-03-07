@@ -13,3 +13,5 @@ else
 fi
 
 . "$HOME/.cargo/env"
+
+# ZDOTDIR=/

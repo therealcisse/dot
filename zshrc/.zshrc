@@ -1,9 +1,9 @@
 # Set TERM to xterm-ghostty if available, otherwise fall back to xterm-256color
-if infocmp xterm-ghostty &>/dev/null; then
-  export TERM=xterm-ghostty
-else
-  export TERM=xterm-256color
-fi
+# if infocmp xterm-ghostty &>/dev/null; then
+#   export TERM=xterm-ghostty
+# else
+#   export TERM=xterm-256color
+# fi
 
 # # Create a hash table for globally stashing variables without polluting main
 # scope with a bunch of identifiers.
@@ -69,7 +69,7 @@ bindkey "\e[1;5C" forward-word  # Ctrl + <right>
 bindkey \^u backward-kill-line
 
 # VI Mode!!!
-bindkey jj vi-cmd-mode
+# bindkey jj vi-cmd-mode
 
 # Switch back and forward between program faster
 
@@ -164,8 +164,6 @@ autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '^x^x' edit-command-line
 
-bindkey ' ' magic-space # do history expansion on space
-
 # Replace standard history-incremental-search-{backward,forward} bindings.
 # These are the same but permit patterns (eg. a*b) to be used.
 bindkey "^r" history-incremental-pattern-search-backward
@@ -223,7 +221,7 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^i' autosuggest-accept
 bindkey '^u' autosuggest-toggle
 bindkey '^k' up-line-or-search
-bindkey '^j' down-line-or-search
+# bindkey '^j' down-line-or-search
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
@@ -296,8 +294,13 @@ if [ -d "$HOME/.zshenv.d" ]; then
   done
 fi
 
-eval "$(starship init zsh)"
+if [[ "$TERM_PROGRAM" != "WarpTerminal" ]]; then
+  eval "$(starship init zsh)"
+fi
 
+
+unsetopt correct
+unsetopt correct_all
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/therealcisse/.lmstudio/bin"
