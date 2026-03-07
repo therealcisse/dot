@@ -7,7 +7,7 @@ if ts_debugging then
   RELOAD 'nvim-treesitter'
 end
 
-local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+-- local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
 
 -- parser_config.ziggy = {
 --   install_info = {
@@ -111,16 +111,7 @@ local swap_next, swap_prev = (function()
   return n, p
 end)()
 
-local _ = require('nvim-treesitter.configs').setup {
-  sync_install = false,
-
-  auto_install = true,
-
-  ignore_install = {},
-
-  modules = {},
-
-  ensure_installed = {
+local _ = require('nvim-treesitter').install {
     -- 'sql',
     'bash',
     'yaml',
@@ -147,134 +138,173 @@ local _ = require('nvim-treesitter.configs').setup {
     'tsx',
     -- 'typescript',
     'nix',
-  },
 
-  highlight = {
-    enable = true,
-    -- use_languagetree = false,
-    -- -- disable = { 'json' },
-    -- custom_captures = custom_captures,
-    disable = { 'Dockerfile' },
-  },
-
-  indent = {
-    enable = true,
-    disable = { 'dart', 'python', 'css', 'html', 'gdscript', 'gdscript3', 'gd', 'Dockerfile' },
-  },
-
-  refactor = {
-    highlight_definitions = { enable = false },
-    highlight_current_scope = { enable = false },
-
-    smart_rename = {
-      enable = false,
-      keymaps = {
-        -- mapping to rename reference under cursor
-        smart_rename = 'grr',
-      },
-    },
-
-    navigation = {
-      enable = false,
-      keymaps = {
-        goto_definition = 'gnd', -- mapping to go to definition of symbol under cursor
-        list_definitions = 'gnD', -- mapping to list all definitions in current file
-      },
-    },
-  },
-
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = '<c-space>',
-      node_incremental = '<c-space>',
-      scope_incremental = '<c-s>',
-      node_decremental = '<M-space>',
-    },
-  },
-
-  context_commentstring = {
-    enable = true,
-
-    -- With Comment.nvim, we don't need to run this on the autocmd.
-    -- Only run it in pre-hook
-    enable_autocmd = false,
-
-    config = {
-      c = '// %s',
-      lua = '-- %s',
-    },
-  },
-
-  -- textobjects = {
-  --   move = {
-  --     enable = true,
-  --     set_jumps = true,
-  --
-  --     goto_next_start = {
-  --       [']p'] = '@parameter.inner',
-  --       [']m'] = '@function.outer',
-  --       [']]'] = '@class.outer',
-  --     },
-  --     goto_next_end = {
-  --       [']M'] = '@function.outer',
-  --       [']['] = '@class.outer',
-  --     },
-  --     goto_previous_start = {
-  --       ['[p'] = '@parameter.inner',
-  --       ['[m'] = '@function.outer',
-  --       ['[['] = '@class.outer',
-  --     },
-  --     goto_previous_end = {
-  --       ['[M'] = '@function.outer',
-  --       ['[]'] = '@class.outer',
-  --     },
-  --   },
-  --
-  --   select = {
-  --     enable = true,
-  --     keymaps = {
-  --       ['af'] = '@function.outer',
-  --       ['if'] = '@function.inner',
-  --
-  --       ['ac'] = '@conditional.outer',
-  --       ['ic'] = '@conditional.inner',
-  --
-  --       ['aa'] = '@parameter.outer',
-  --       ['ia'] = '@parameter.inner',
-  --
-  --       ['av'] = '@variable.outer',
-  --       ['iv'] = '@variable.inner',
-  --     },
-  --   },
-  --
-  --   swap = {
-  --     enable = true,
-  --     swap_next = swap_next,
-  --     swap_previous = swap_prev,
-  --   },
-  -- },
-
-  playground = {
-    enable = true,
-    updatetime = 25,
-    persist_queries = true,
-    keybindings = {
-      toggle_query_editor = 'o',
-      toggle_hl_groups = 'i',
-      toggle_injected_languages = 't',
-
-      -- This shows stuff like literal strings, commas, etc.
-      toggle_anonymous_nodes = 'a',
-      toggle_language_display = 'I',
-      focus_language = 'f',
-      unfocus_language = 'F',
-      update = 'R',
-      goto_node = '<cr>',
-      show_help = '?',
-    },
-  },
 }
+
+-- local _ = require('nvim-treesitter.config').setup {
+--   sync_install = false,
+--
+--   auto_install = true,
+--
+--   ignore_install = {},
+--
+--   modules = {},
+--
+--   ensure_installed = {
+--     -- 'sql',
+--     'bash',
+--     'yaml',
+--     'markdown',
+--     'markdown_inline',
+--     'hcl',
+--     -- 'dap_repl',
+--     'lua',
+--     'regex',
+--     'markdown_inline',
+--     -- 'dart',
+--     'scala',
+--     -- 'zig',
+--     'go',
+--     'html',
+--     'javascript',
+--     'java',
+--     'json',
+--     'markdown',
+--     'python',
+--     -- 'query',
+--     -- 'rust',
+--     -- 'toml',
+--     'tsx',
+--     -- 'typescript',
+--     'nix',
+--   },
+--
+--   -- highlight = {
+--   --   enable = true,
+--   --   -- use_languagetree = false,
+--   --   -- -- disable = { 'json' },
+--   --   -- custom_captures = custom_captures,
+--   --   disable = { 'Dockerfile' },
+--   -- },
+--
+--   indent = {
+--     enable = true,
+--     disable = { 'dart', 'python', 'css', 'html', 'gdscript', 'gdscript3', 'gd', 'Dockerfile' },
+--   },
+--
+--   refactor = {
+--     highlight_definitions = { enable = false },
+--     highlight_current_scope = { enable = false },
+--
+--     smart_rename = {
+--       enable = false,
+--       keymaps = {
+--         -- mapping to rename reference under cursor
+--         smart_rename = 'grr',
+--       },
+--     },
+--
+--     navigation = {
+--       enable = false,
+--       keymaps = {
+--         goto_definition = 'gnd', -- mapping to go to definition of symbol under cursor
+--         list_definitions = 'gnD', -- mapping to list all definitions in current file
+--       },
+--     },
+--   },
+--
+--   incremental_selection = {
+--     enable = true,
+--     keymaps = {
+--       init_selection = '<c-space>',
+--       node_incremental = '<c-space>',
+--       scope_incremental = '<c-s>',
+--       node_decremental = '<M-space>',
+--     },
+--   },
+--
+--   context_commentstring = {
+--     enable = true,
+--
+--     -- With Comment.nvim, we don't need to run this on the autocmd.
+--     -- Only run it in pre-hook
+--     enable_autocmd = false,
+--
+--     config = {
+--       c = '// %s',
+--       lua = '-- %s',
+--     },
+--   },
+--
+--   -- textobjects = {
+--   --   move = {
+--   --     enable = true,
+--   --     set_jumps = true,
+--   --
+--   --     goto_next_start = {
+--   --       [']p'] = '@parameter.inner',
+--   --       [']m'] = '@function.outer',
+--   --       [']]'] = '@class.outer',
+--   --     },
+--   --     goto_next_end = {
+--   --       [']M'] = '@function.outer',
+--   --       [']['] = '@class.outer',
+--   --     },
+--   --     goto_previous_start = {
+--   --       ['[p'] = '@parameter.inner',
+--   --       ['[m'] = '@function.outer',
+--   --       ['[['] = '@class.outer',
+--   --     },
+--   --     goto_previous_end = {
+--   --       ['[M'] = '@function.outer',
+--   --       ['[]'] = '@class.outer',
+--   --     },
+--   --   },
+--   --
+--   --   select = {
+--   --     enable = true,
+--   --     keymaps = {
+--   --       ['af'] = '@function.outer',
+--   --       ['if'] = '@function.inner',
+--   --
+--   --       ['ac'] = '@conditional.outer',
+--   --       ['ic'] = '@conditional.inner',
+--   --
+--   --       ['aa'] = '@parameter.outer',
+--   --       ['ia'] = '@parameter.inner',
+--   --
+--   --       ['av'] = '@variable.outer',
+--   --       ['iv'] = '@variable.inner',
+--   --     },
+--   --   },
+--   --
+--   --   swap = {
+--   --     enable = true,
+--   --     swap_next = swap_next,
+--   --     swap_previous = swap_prev,
+--   --   },
+--   -- },
+--
+--   playground = {
+--     enable = true,
+--     updatetime = 25,
+--     persist_queries = true,
+--     keybindings = {
+--       toggle_query_editor = 'o',
+--       toggle_hl_groups = 'i',
+--       toggle_injected_languages = 't',
+--
+--       -- This shows stuff like literal strings, commas, etc.
+--       toggle_anonymous_nodes = 'a',
+--       toggle_language_display = 'I',
+--       focus_language = 'f',
+--       unfocus_language = 'F',
+--       update = 'R',
+--       goto_node = '<cr>',
+--       show_help = '?',
+--     },
+--   },
+-- }
 
 local read_query = function(filename)
   return table.concat(vim.fn.readfile(vim.fn.expand(filename)), '\n')
