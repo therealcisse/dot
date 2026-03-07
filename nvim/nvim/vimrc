@@ -856,7 +856,7 @@ cnoremap <expr> <C-F>  (getcmdpos()<(len(getcmdline())+1)) && (getcmdtype()==":"
 " <C-E> <End>
 
 command! CopyBuffer let @+ = expand('%:p')
-command! Jq :%!jq '.'
+command! -range Jq :<line1>,<line2>!jq '.'
 command! -range -nargs=+ GpDiff lua gp_diff(<q-args>, <line1>, <line2>)
 
 command! Scratch execute 'vsplit' | execute 'enew' | setlocal buftype=nofile bufhidden=hide noswapfile
@@ -941,10 +941,10 @@ lua << EOF
   -- require "trc.autoclose"
   -- require "trc.foldtext"
   -- require "trc.dap"
-  -- require "trc.terraform"
---  require "trc.jsonnet"
+  require "trc.terraform"
+  require "trc.jsonnet"
   require "trc.markdown"
- -- require "trc.codecompanion"
+  require "trc.codecompanion"
   -- require "trc.harpoon"
   require "trc.gp"
   require "trc.pounce"

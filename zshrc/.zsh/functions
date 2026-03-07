@@ -461,3 +461,21 @@ git_clean_repo() {
   return 0
 }
 
+metals_clean() {
+  local dirs=(.bloop .metals .bsp project/.bloop project/.bsp)
+  local files=(project/metals.sbt)
+  echo "Cleaning metals/bloop artifacts..."
+  for dir in "${dirs[@]}"; do
+    if [ -d "$dir" ]; then
+      echo "  Removing directory: $dir"
+      rm -rf "$dir"
+    fi
+  done
+  for file in "${files[@]}"; do
+    if [ -f "$file" ]; then
+      echo "  Removing file: $file"
+      rm -f "$file"
+    fi
+  done
+  echo "Metals cleanup complete!"
+}

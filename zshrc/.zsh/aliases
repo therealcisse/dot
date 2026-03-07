@@ -7,6 +7,7 @@ alias rz='source ~/.zshrc'
 alias ze='nvim ~/.zshrc'
 alias za='nvim ~/.zsh/aliases'
 alias zf='nvim ~/.zsh/functions'
+alias oc='opencode'
 
 alias jfr=/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home/bin/jfr
 
