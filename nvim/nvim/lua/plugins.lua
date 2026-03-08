@@ -550,13 +550,12 @@ return require('lazy').setup({
 		-- build = 'TSUpdate',
 		-- commit = 'f2778bd',
 		event = 'BufReadPost',
-    main = 'nvim-treesitter.config', -- Sets main module to use for opts
 		-- commit = '33eb472',
 	},
 	-- 'nvim-treesitter/nvim-treesitter-context',
 	-- 'nvim-treesitter/playground',
 
-	-- 'nvim-treesitter/nvim-treesitter-textobjects',
+	'nvim-treesitter/nvim-treesitter-textobjects',
 	-- 'JoosepAlviste/nvim-ts-context-commentstring',
 	{
 		'mfussenegger/nvim-ts-hint-textobject',
@@ -995,7 +994,6 @@ return require('lazy').setup({
     },
 
     version = 'v1.*',
-    build = 'cargo build --release',
 
     lazy = false,
 

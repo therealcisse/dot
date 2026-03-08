@@ -1,0 +1,171 @@
+[alias]
+	abbrev = !bash -c 'git rev-parse --short ${1-`echo HEAD`}' -
+	ack = grep --break --heading
+	amend = commit --amend -v
+	both = diff --ignore-submodules=dirty HEAD
+	br = branch
+	ci = commit -v
+	co = checkout
+	count = !git --no-pager log --oneline | wc -l
+	cp = cherry-pick
+	delta = "!f() { git diff \"$@\" | delta; }; f"
+
+	# http://stackoverflow.com/questions/224687/git-find-duplicate-blobs-files-in-this-tree/8408640#8408640
+	dupes = !"git ls-tree -r HEAD | cut -c 13- | sort | uniq -D -w 40"
+
+	ff = merge --ff-only
+	find = "!f() { git ls-files | grep \"$@\"; }; f"
+	fixup = !bash -c 'git commit --fixup=$1 ${@:2}' -
+	fresh = remote update --prune
+	full = show --format=fuller
+
+	# Shortcut for updating all remotes and fast-forwarding to a specific one:
+	# eg. `git get upstream/main`
+	get = "!f() { git fresh && git ff \"$@\"; }; f"
+
+	gr = !git --paginate log --graph --all --pretty=format:'%C(auto)%h%Creset%C(auto)%d%Creset %s %C(magenta bold)(%cr)%Creset %C(cyan)<%aN>%Creset'
+	graph = !git --paginate log --graph --pretty=format:'%C(auto)%h%Creset%C(auto)%d%Creset %s %C(magenta bold)(%cr)%Creset %C(cyan)<%aN>%Creset'
+
+	jump = "!f() { vcs-jump \"$@\"; }; f"
+
+	message = !git --paginate log -1 --pretty=format:%B
+
+	no-edit = commit --amend --no-edit
+
+	one = !git --paginate log --pretty=format:'%C(auto)%h%Creset %s%C(auto)%d%Creset %C(magenta bold)(%cr)%Creset %C(cyan)<%aN>%Creset'
+	oneline = !git --paginate log --pretty=format:'%C(auto)%h%Creset %s%C(auto)%d%Creset %C(magenta bold)(%cr)%Creset %C(cyan)<%aN>%Creset'
+
+	p = add -p
+
+	recover = !cat "$(git rev-parse --git-dir 2> /dev/null)/COMMIT_EDITMSG"
+
+	reword = commit --amend --only -v --
+
+	rollback = !bash -c 'git reset --merge HEAD~${1-1}' -
+
+	sl = !git --paginate log --graph --pretty=format:'%C(auto)%h%Creset%C(auto)%d%Creset %s %C(magenta bold)(%cr)%Creset %C(cyan)<%aN>%Creset' --all --simplify-by-decoration
+
+	st = status
+	staged = diff --cached --ignore-submodules=dirty
+
+	ten = !git --paginate log -10 --pretty=format:'%C(auto)%h%Creset%C(auto)%d%Creset %s %C(magenta bold)(%cr)%Creset %C(cyan)<%aN>%Creset'
+
+	up = checkout
+
+	wc = whatchanged
+
+	# similar to whatchanged, but gives a dir-level overview:
+	# usage: git wd [diff-against=HEAD] [max-depth=4]
+	wd = "!f() { git --paginate diff --dirstat=cumulative,files,0 ${1:-HEAD} | awk '{print $2}' | cut -d / -f1-${2:-4} | sort | uniq; }; f"
+
+	# same as wd ("what directories?") but for files ("what files?")
+	# usage: git wd [diff-against=HEAD]
+	wf = "!f() { git --paginate diff --stat=10000 ${1:-HEAD} | awk '{print $1}' | sed '$d' | sort; }; f"
+
+[color]
+	ui = auto
+
+[color "diff-highlight"]
+	newhighlight = reverse
+	newreset = noreverse
+	oldhighlight = reverse
+	oldreset = noreverse
+
+[color "interactive"]
+	prompt = blue reverse
+
+[color "status"]
+	untracked = blue
+
+[core]
+	attributesfile = ~/.gitattributes
+	excludesfile = ~/.gitignore
+
+	# S = chop long lines (rather than wrap them onto next line)
+	pager = less -S
+
+[delta]
+	max-line-length = 0
+	line-numbers = true
+
+[diff]
+	algorithm = histogram
+	indentHeuristic = true
+
+[difftool]
+	prompt = false
+
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+
+[github]
+	username = therealcisse
+
+[grep]
+	lineNumber = true
+	patternType = perl
+
+[help]
+	autocorrect = 2
+
+[init]
+	defaultBranch = main
+
+[interactive]
+	diffFilter = diff-highlight
+
+[log]
+	decorate = short
+
+[merge]
+	conflictStyle = zdiff3
+	log = 1000
+
+[pager]
+	diff = ~/.zsh/bin/diff-highlight | menos -iFMRSX --pattern='^(commit|diff)'
+	log = ~/.zsh/bin/diff-highlight | menos -iFMRSX --pattern='^(commit|diff)'
+	show = ~/.zsh/bin/diff-highlight | menos -iFMRSX --pattern='^(commit|diff)'
+	show-branch = true
+	status = true
+	whatchanged = ~/.zsh/bin/diff-highlight | menos -iFMRSX --pattern='^(commit|diff)'
+
+[protocol]
+	version = 2
+
+[pull]
+	ff = only
+
+[push]
+	default = simple
+
+[rebase]
+	autosquash = true
+
+[rerere]
+	enabled = true
+
+[status]
+	submodulesummary = true
+
+[submodule]
+	fetchJobs = 4
+
+[credential]
+	helper = /usr/local/bin/git-credential-manager
+	credentialStore = cache
+
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+
+[user]
+	email = cisse.amadou.9@gmail.com
+	name = Amadou Cisse
+
+[include]
+	path = .gitconfig.local
+
+[includeIf "gitdir:~/Developer/work/"]
+	path = ~/.gitconfig.work
