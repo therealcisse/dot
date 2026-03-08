@@ -547,10 +547,8 @@ return require('lazy').setup({
 	-- TREE SITTER:
 	{
 		'nvim-treesitter/nvim-treesitter',
-		-- build = 'TSUpdate',
-		-- commit = 'f2778bd',
-		event = 'BufReadPost',
-		-- commit = '33eb472',
+		lazy = false,
+		build = ':TSUpdate',
 	},
 	-- 'nvim-treesitter/nvim-treesitter-context',
 	-- 'nvim-treesitter/playground',
