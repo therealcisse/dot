@@ -73,3 +73,4 @@ keybind = ctrl+alt+g>e=equalize_splits
 
 split-divider-color = #ffffff
 
+keybind = ctrl+i=text:\x09
