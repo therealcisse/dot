@@ -3,8 +3,3 @@ tmux/plugins/
 raycast
 fzf
 history.txt
-
-# Presentation files (local only)
-nvim/nvim/PRESENTATION.md
-nvim/nvim/PRESENTATION-slides.md
-nvim/nvim/present.sh
