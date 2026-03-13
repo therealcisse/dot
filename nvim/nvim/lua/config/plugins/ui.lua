@@ -122,12 +122,16 @@ return {
       bigfile = { enabled = true },
       dashboard = {
         enabled = true,
+        preset = {
+          keys = {
+            { icon = " ", key = "n", desc = "New File", action = ":enew" },
+          },
+        },
         sections = {
           { section = "header" },
           { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-          -- { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
           { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
-          -- { section = "startup" },
+          { section = "keys", gap = 1, padding = 1 },
         },
       },
       notifier = { enabled = true, timeout = 3000 },
