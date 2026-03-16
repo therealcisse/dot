@@ -71,7 +71,7 @@ A tour of how I work
 
 ## 4. File Navigation with Telescope 
 
-- `<C-p>` for fuzzy file finding (ivy theme)
+- `<C-p>` for fuzzy file finding
 - `<C-g>/` for live grep with args (ripgrep under the hood)
 - Inside Telescope:
   - `<Tab>` toggle selection on a result
@@ -184,8 +184,7 @@ A tour of how I work
 ## 9. Align and Indent 
 
 - `=` is Vim's reindent operator: `==` line, `=ap` paragraph, `=ae` entire file
-- `<leader>F` reindents the entire file
-- Visual `<leader>F` reindents the selection
+- Visual `=` reindents the selection
 - vim-lion: `gl{motion}{char}` aligns around a character
   - `glip=` aligns a paragraph around `=`
 - Visual block trick: `<C-v>` select a column, `x` to strip
@@ -251,7 +250,7 @@ A tour of how I work
 
 ### Try it: Gitsigns
 
-1. Open `Main.scala` (added line at line 20)
+1. Open `Main.scala` (add a change at line 20)
 2. `]c` to jump to hunk, `<leader>hp` to preview
 3. `<leader>hs` to stage, `<leader>hu` to undo
 4. `<leader>tb` to toggle inline blame
@@ -263,6 +262,7 @@ A tour of how I work
 
 - Metals for Scala, auto-attaches on FileType
 - `gd` definition
+- `gI` go to implementation
 - `K` hover docs
 
 ---
@@ -277,6 +277,7 @@ A tour of how I work
 ### Try it: LSP with Metals
 
 1. Cursor on `UserService()` (line 10) -> `gd`, then `<C-o>` back
+2. Cursor on `UserService` type (line 10) -> `gI` to jump to the private `Impl` class
 2. Cursor on `getOrElse` in `UserService.scala` -> `K` for hover
 3. Cursor on `calculateTotal` -> `<localleader>rn` to rename
 4. `[e` / `]e` to navigate diagnostics
