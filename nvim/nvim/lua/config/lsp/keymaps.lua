@@ -62,8 +62,22 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end)
 
     -- Telescope LSP pickers
-    map("n", "<localleader>gr", function() require("telescope.builtin").lsp_references() end)
-    map("n", "gI", function() require("telescope.builtin").lsp_implementations() end)
+    map("n", "<localleader>gr", function()
+      require("telescope.builtin").lsp_references(
+        require("telescope.themes").get_ivy({
+          show_line = false,
+          path_display = { "truncate" },
+        })
+      )
+    end)
+    map("n", "gI", function()
+      require("telescope.builtin").lsp_implementations(
+        require("telescope.themes").get_ivy({
+          show_line = false,
+          path_display = { "truncate" },
+        })
+      )
+    end)
 
     -- Actions
     map("n", "<localleader>rn", vim.lsp.buf.rename)
