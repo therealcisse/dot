@@ -201,8 +201,18 @@ map("n", "<leader><Right>", "<C-W><Right>")
 map("n", "<leader><Down>", "<C-W><Down>")
 
 -- Telescope workspace symbols
-map("n", "<localleader>wd", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>")
-map("n", "<localleader>ww", "<cmd>Telescope lsp_document_symbols<CR>")
+map("n", "<localleader>wd", function()
+  require("telescope.builtin").lsp_dynamic_workspace_symbols(
+    require("telescope.themes").get_ivy({
+      path_display = { "truncate" },
+    })
+  )
+end)
+map("n", "<localleader>ww", function()
+  require("telescope.builtin").lsp_document_symbols(
+    require("telescope.themes").get_ivy()
+  )
+end)
 
 -- Snacks dashboard
 map("n", "<C-;>", ":lua Snacks.dashboard.open()<CR>")
