@@ -2,7 +2,7 @@ return {
   -- Fugitive
   "tpope/vim-fugitive",
 
-  -- Gitsigns (inlined from trc.gitsigns)
+  -- Gitsigns
   {
     "lewis6991/gitsigns.nvim",
     config = function()

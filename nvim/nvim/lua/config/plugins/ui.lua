@@ -8,7 +8,7 @@ return {
     end,
   },
 
-  -- Statusline (lualine, inlined from plugins.lua)
+  -- Statusline (lualine)
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -181,7 +181,7 @@ return {
     end,
   },
 
-  -- Winbar (inlined from trc.winbar)
+  -- Winbar
   {
     "fgheng/winbar.nvim",
     config = function()
