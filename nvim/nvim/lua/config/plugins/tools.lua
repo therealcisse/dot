@@ -1,5 +1,5 @@
 return {
-  -- Lir file navigator (inlined from trc.lir)
+  -- Lir file navigator
   {
     "tamago324/lir.nvim",
     dependencies = { "tamago324/lir-git-status.nvim", "nvim-tree/nvim-web-devicons" },
@@ -68,7 +68,7 @@ return {
     end,
   },
 
-  -- Toggleterm (inlined from trc.toggleterm)
+  -- Toggleterm
   {
     "akinsho/toggleterm.nvim",
     version = "*",
@@ -111,7 +111,7 @@ return {
     end,
   },
 
-  -- Telescope (inlined from trc.telescope.setup + trc.telescope.mappings)
+  -- Telescope
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
@@ -230,7 +230,7 @@ return {
       pcall(require("telescope").load_extension, "smart_history")
       pcall(require("telescope").load_extension, "frecency")
 
-      -- Telescope keymaps (from trc.telescope.mappings)
+      -- Telescope keymaps
       local sorters = require("telescope.sorters")
       local builtin = require("telescope.builtin")
 

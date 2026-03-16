@@ -1,5 +1,5 @@
 return {
-  -- Surround (inlined from trc.surround)
+  -- Surround
   {
     "kylechui/nvim-surround",
     event = "VeryLazy",
@@ -8,7 +8,7 @@ return {
     end,
   },
 
-  -- Autopairs (inlined from trc.autopairs)
+  -- Autopairs
   {
     "windwp/nvim-autopairs",
     config = function()
@@ -43,7 +43,7 @@ return {
     end,
   },
 
-  -- Comment (inlined from after/plugin/comments.lua)
+  -- Comment
   {
     "numToStr/Comment.nvim",
     config = function()
@@ -59,7 +59,7 @@ return {
     end,
   },
 
-  -- Pounce (inlined from trc.pounce)
+  -- Pounce
   {
     "rlane/pounce.nvim",
     config = function()
@@ -78,7 +78,7 @@ return {
     end,
   },
 
-  -- Matchparen (inlined from after/plugin/matchparen.vim)
+  -- Matchparen
   {
     "monkoose/matchparen.nvim",
     branch = "main",
@@ -92,7 +92,7 @@ return {
   -- vim-matchup matchparen offscreen
   { "andymass/vim-matchup", init = function() vim.g.matchup_matchparen_offscreen = {} end },
 
-  -- LuaSnip (inlined from after/plugin/luasnip.lua)
+  -- LuaSnip
   {
     "L3MON4D3/LuaSnip",
     version = "v2.*",
@@ -272,7 +272,7 @@ return {
     },
   },
 
-  -- Render-markdown (inlined from trc.markdown, merged with plugins.lua spec)
+  -- Render-markdown
   {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.icons" },
@@ -322,7 +322,7 @@ return {
     end,
   },
 
-  -- Spectre (inlined from after/plugin/spectre.lua)
+  -- Spectre
   {
     "windwp/nvim-spectre",
     config = function()
@@ -381,7 +381,7 @@ return {
   },
   "google/vim-searchindex",
 
-  -- Zen mode (inlined from after/plugin/zen.lua)
+  -- Zen mode
   {
     "folke/zen-mode.nvim",
     dependencies = { "folke/twilight.nvim" },

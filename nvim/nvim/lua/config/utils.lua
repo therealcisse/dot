@@ -88,7 +88,7 @@ function M.keynote()
   vim.cmd("quit")
 end
 
--- Statusline utilities (from trc.utils)
+-- Statusline utilities
 M.color_suffix = "MyColors"
 
 M.icons = {

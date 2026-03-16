@@ -16,7 +16,7 @@ return {
     end,
   },
 
-  -- Treesitter (inlined from after/plugin/treesitter.lua)
+  -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
@@ -135,7 +135,7 @@ return {
     end,
   },
 
-  -- Terraform (inlined from trc.terraform)
+  -- Terraform
   {
     "hashivim/vim-terraform",
     config = function()
