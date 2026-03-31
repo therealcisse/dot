@@ -193,7 +193,7 @@ return {
         icons = { file_icon_default = "", seperator = ">", editor_state = "", lock_icon = "" },
         exclude_filetype = {
           "scratch", "help", "startify", "dashboard", "packer",
-          "neogitstatus", "NvimTree", "Trouble", "alpha", "lir",
+          "neogitstatus", "NvimTree", "Trouble", "alpha",
           "Outline", "spectre_panel", "toggleterm", "qf",
         },
       })
