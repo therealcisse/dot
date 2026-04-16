@@ -5,8 +5,7 @@
 require("config.lsp.keymaps")
 require("config.lsp.diagnostics")
 
-local codelens = require("config.lsp.codelens")
-codelens.setup()
+require("config.lsp.codelens").setup()
 
 -- Shared defaults for ALL servers
 local capabilities = require("blink.cmp").get_lsp_capabilities()
@@ -21,7 +20,6 @@ vim.lsp.config("*", {
   capabilities = capabilities,
   handlers = {
     ["window/showMessage"] = require("config.lsp.show_message"),
-    ["textDocument/codeLens"] = codelens.on_codelens,
   },
 })
 

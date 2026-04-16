@@ -44,6 +44,14 @@ require("lazy").setup({
   },
 })
 
+-- UI2 (experimental Neovim 0.12 cmdline/messages)
+-- Disabled for now — re-enable when UI2 matures (0.13+).
+-- require("vim._core.ui2").enable({
+--   msg = {
+--     targets = "msg",
+--   },
+-- })
+
 -- Core modules (after plugins are declared so lazy specs resolve)
 require("config.keymaps")
 require("config.autocmds")
