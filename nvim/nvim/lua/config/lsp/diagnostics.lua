@@ -21,8 +21,11 @@ vim.diagnostic.config({
 })
 
 vim.keymap.set("", "<leader>l", function()
-  require("lsp_lines").toggle()
-end, { desc = "Toggle lsp_lines" })
+  local vl = vim.diagnostic.config().virtual_lines
+  vim.diagnostic.config({
+    virtual_lines = not vl and { only_on_current_line = true, highlight_whole_line = false } or false,
+  })
+end, { desc = "Toggle virtual lines diagnostics" })
 
 vim.keymap.set("n", "<leader>gj", function()
   vim.diagnostic.jump({ count = 1, wrap = true, float = true })

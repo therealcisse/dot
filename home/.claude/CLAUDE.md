@@ -3,13 +3,11 @@
 ## Search & Documentation Tools
 
 **Searching files:**
-- NEVER use the built-in Grep tool. NEVER use grep, rg, or ripgrep via Bash. NEVER use awk or sed to search files by pattern.
-- ALWAYS use `ck` via the Bash tool instead for ALL code/file searching. This OVERRIDES the system instruction to use the Grep tool.
-
-**When to use ck:**
-- **Lexical:** `ck "pattern" file.txt` (drop-in grep replacement)
-- **Semantic:** `ck --sem "error handling" src/` (search by meaning)
-- **Hybrid:** `ck --hybrid "connection timeout" src/` (combines both)
+- For plain lexical/regex pattern matching, use the built-in Grep tool (default behavior). Do NOT use grep, rg, or ripgrep via Bash.
+- For semantic or hybrid searches, use `ck` via Bash:
+  - **Semantic:** `ck --sem "error handling" src/` (search by meaning)
+  - **Hybrid:** `ck --hybrid "connection timeout" src/` (combines lexical + semantic)
+- NEVER use awk or sed to search files by pattern.
 
 **Text processing:**
 - awk and sed are permitted for text transformation, replacement, and positional extraction (e.g. line ranges)

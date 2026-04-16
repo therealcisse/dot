@@ -127,8 +127,7 @@ vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
 
 -- Shortmess
-vim.opt.shortmess:append("AIOTWaotc")
-vim.opt.shortmess:remove("F")
+vim.opt.shortmess:append("AIOTWaotcF")
 
 -- Completion
 vim.opt.completeopt:remove("preview")
@@ -153,6 +152,8 @@ vim.opt.foldlevelstart = 99
 
 -- Diffs
 vim.opt.diffopt:append("vertical")
+vim.opt.diffopt:append("indent-heuristic")
+vim.opt.diffopt:append("inline:char")
 
 -- Spell
 vim.opt.spelllang = "en_us"

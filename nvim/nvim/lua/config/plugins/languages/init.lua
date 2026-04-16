@@ -8,14 +8,6 @@ return {
   "justinsgithub/wezterm-types",
   "b0o/schemastore.nvim",
 
-  -- LSP lines
-  {
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    config = function()
-      require("lsp_lines").setup()
-    end,
-  },
-
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
