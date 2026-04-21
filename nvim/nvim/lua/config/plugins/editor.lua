@@ -153,6 +153,8 @@ return {
         ["<CR>"] = { "accept", "fallback" },
         ["<C-e>"] = { "select_and_accept", "fallback" },
         ["<C-j>"] = { "snippet_forward", "fallback" },
+        ["<Tab>"] = { "accept", "select_next", "fallback" },
+        ["<S-Tab>"] = { "select_prev", "fallback" },
         ["<C-k>"] = { "snippet_backward", "fallback" },
       },
       snippets = { preset = "luasnip" },

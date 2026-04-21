@@ -164,9 +164,6 @@ map("n", "'", "`")
 -- snoremap <BS> in select mode
 map("s", "<BS>", "<BS>i")
 
--- Tab/S-Tab in popupmenu
-map("i", "<Tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
-map("i", "<S-Tab>", [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 
 -- Git conflict markers
 map("n", "[g", ":set nohls<CR>/<<<<<<<<CR>:set hls<CR>")
