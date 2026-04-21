@@ -5,46 +5,11 @@ vim.g.maplocalleader = "\\"
 -- LuaSnip guard (must be set before plugins load)
 vim.g.snippets = "luasnip"
 
--- Disable builtin plugins
-vim.g.loaded_gzip = 1
-vim.g.loaded_zip = 1
-vim.g.loaded_zipPlugin = 1
-vim.g.loaded_tar = 1
-vim.g.loaded_tarPlugin = 1
-vim.g.loaded_getscript = 1
-vim.g.loaded_getscriptPlugin = 1
-vim.g.loaded_vimball = 1
-vim.g.loaded_vimballPlugin = 1
-vim.g.loaded_2html_plugin = 1
-vim.g.loaded_matchit = 1
-vim.g.loaded_matchparen = 1
-vim.g.loaded_logiPat = 1
-vim.g.loaded_rrhelper = 1
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_netrwSettings = 1
-
 -- Plugin globals
 vim.g.ts_highlight_lua = false
 vim.g.omni_sql_default_compl_type = "syntax"
 vim.g.move_key_modifier = "C"
 vim.g.move_map_keys = 0
-vim.g.SignatureMarkTextHLDynamic = 1
-vim.g.WebDevIconsNerdTreeAfterGlyphPadding = ""
-vim.g.WebDevIconsNerdTreeGitPluginForceVAlign = 0
-vim.g.WebDevIconsOS = "Darwin"
-vim.g.sort_motion_flags = "u"
-vim.g.floating_window_border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
-vim.g.floating_window_border_dark = {
-  { "╭", "FloatBorderDark" },
-  { "─", "FloatBorderDark" },
-  { "╮", "FloatBorderDark" },
-  { "│", "FloatBorderDark" },
-  { "╯", "FloatBorderDark" },
-  { "─", "FloatBorderDark" },
-  { "╰", "FloatBorderDark" },
-  { "│", "FloatBorderDark" },
-}
 
 -- FZF
 vim.env.FZF_DEFAULT_OPTS = "--height 40% --layout=reverse --border --no-preview"
@@ -72,7 +37,6 @@ vim.opt.winborder = "rounded"
 
 -- Search
 vim.opt.ignorecase = false
-vim.opt.smartcase = true
 vim.opt.incsearch = true
 vim.opt.magic = true
 vim.opt.gdefault = true
@@ -99,7 +63,6 @@ vim.opt.infercase = true
 
 -- Display
 vim.opt.synmaxcol = 512
-vim.cmd("syntax sync minlines=1024")
 vim.opt.list = true
 vim.wo.listchars = table.concat({
   "multispace:---+",
@@ -132,6 +95,8 @@ vim.opt.shortmess:append("AIOTWaotcF")
 -- Completion
 vim.opt.completeopt:remove("preview")
 vim.opt.complete:remove("i")
+vim.opt.pummaxwidth = 40
+vim.opt.completeopt:append("nearest")
 
 -- Wildmenu
 vim.opt.wildmenu = true
@@ -152,8 +117,6 @@ vim.opt.foldlevelstart = 99
 
 -- Diffs
 vim.opt.diffopt:append("vertical")
-vim.opt.diffopt:append("indent-heuristic")
-vim.opt.diffopt:append("inline:char")
 
 -- Spell
 vim.opt.spelllang = "en_us"

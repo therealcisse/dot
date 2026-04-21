@@ -74,7 +74,6 @@ return {
     event = "VimEnter",
     dependencies = {
       "MunifTanjim/nui.nvim",
-      "hrsh7th/nvim-cmp",
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
     },
@@ -138,10 +137,19 @@ return {
       quickfile = { enabled = false },
       statuscolumn = { enabled = false },
       words = { enabled = true },
-      styles = { notification = { wo = { wrap = true } } },
+      styles = {
+        notification = { wo = { wrap = true } },
+        terminal = {
+          bo = { filetype = "snacks_terminal" },
+          wo = { winbar = " Terminal ", winhighlight = "Normal:Normal,FloatBorder:FloatBorder" },
+          border = "rounded",
+        },
+      },
     },
     keys = {
-      { "<c-/>", function() Snacks.terminal("zsh") end, desc = "Toggle Terminal" },
+      { "<c-/>", function() Snacks.terminal("zsh", { win = { border = "rounded" } }) end, desc = "Toggle Terminal" },
+      { "<leader>T", function() Snacks.terminal({ "zsh" }, { win = { position = "bottom", height = 0.25, border = "rounded" } }) end, desc = "Horizontal Terminal" },
+      { "<leader>gl", function() Snacks.terminal("lazygit", { win = { border = "rounded" } }) end, desc = "Lazygit" },
       {
         "<leader>N",
         desc = "Neovim News",

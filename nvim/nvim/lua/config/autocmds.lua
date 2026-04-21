@@ -105,6 +105,16 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
+-- Auto-create parent directories on write
+vim.api.nvim_create_autocmd("BufWritePre", {
+  callback = function()
+    local dir = vim.fn.expand("<afile>:p:h")
+    if vim.fn.isdirectory(dir) == 0 then
+      vim.fn.mkdir(dir, "p")
+    end
+  end,
+})
+
 -- Close location/quickfix on quit
 vim.api.nvim_create_autocmd("QuitPre", {
   callback = function()
@@ -128,7 +138,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
   group = term_group,
   pattern = "*",
   callback = function()
-    vim.bo.bufhidden = "hide"
+    vim.bo.bufhidden = "wipe"
     vim.wo.winhighlight = "Normal:Normal"
   end,
 })
@@ -136,7 +146,12 @@ vim.api.nvim_create_autocmd("TermClose", {
   group = term_group,
   pattern = "*",
   callback = function(args)
-    vim.cmd("bdelete! " .. args.buf)
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.api.nvim_win_get_buf(win) == args.buf then
+        pcall(vim.api.nvim_win_close, win, true)
+      end
+    end
+    pcall(vim.api.nvim_buf_delete, args.buf, { force = true })
   end,
 })
 
