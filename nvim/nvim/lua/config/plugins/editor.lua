@@ -360,15 +360,6 @@ return {
   { "coderifous/textobj-word-column.vim", dependencies = { "kana/vim-textobj-user" } },
   { "mattn/vim-textobj-url", dependencies = { "kana/vim-textobj-user" } },
 
-  -- Treesitter hint textobject
-  {
-    "mfussenegger/nvim-ts-hint-textobject",
-    config = function()
-      vim.cmd([[omap     <silent> m :<C-U>lua require('tsht').nodes()<CR>]])
-      vim.cmd([[vnoremap <silent> m :lua require('tsht').nodes()<CR>]])
-    end,
-  },
-
   -- Search enhancements
   {
     "haya14busa/vim-asterisk",
@@ -463,8 +454,6 @@ return {
 
   -- Startuptime
 
-  -- Auto mkdir
-  "DataWraith/auto_mkdir",
   "tpope/vim-unimpaired",
   "tommcdo/vim-lion",
   "tpope/vim-eunuch",

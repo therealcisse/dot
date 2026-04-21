@@ -68,49 +68,6 @@ return {
     end,
   },
 
-  -- Toggleterm
-  {
-    "akinsho/toggleterm.nvim",
-    version = "*",
-    config = function()
-      require("toggleterm").setup({
-        size = 20,
-        open_mapping = [[<c-\>]],
-        hide_numbers = true,
-        start_in_insert = true,
-        insert_mappings = true,
-        persist_mode = true,
-        persist_size = true,
-        direction = "horizontal",
-        shell = "/opt/homebrew/bin/zsh",
-        float_opts = {
-          border = "curved",
-          winblend = 3,
-          highlights = { border = "Normal", background = "Normal" },
-        },
-      })
-
-      function _G.set_terminal_keymaps()
-        local opts = { noremap = true }
-        vim.api.nvim_buf_set_keymap(0, "t", "<esc>", [[<C-\><C-n>]], opts)
-        vim.api.nvim_buf_set_keymap(0, "t", "jk", [[<C-\><C-n>]], opts)
-        vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
-        vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
-      end
-
-      vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
-
-      local Terminal = require("toggleterm.terminal").Terminal
-      local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
-
-      function _LAZYGIT_TOGGLE() lazygit:toggle() end
-
-      vim.api.nvim_create_user_command("Lazygit", function() _LAZYGIT_TOGGLE() end, {})
-      vim.keymap.set("n", "<leader>gl", "<cmd>Lazygit<cr>")
-      vim.keymap.set("n", "<leader>T", ":ToggleTerm direction=horizontal<CR>")
-    end,
-  },
-
   -- Telescope
   {
     "nvim-telescope/telescope.nvim",
