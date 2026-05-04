@@ -176,3 +176,7 @@ vim.api.nvim_create_user_command("Preview", function(opts)
     vim.api.nvim_err_writeln('No "open" or "glow" executable found')
   end
 end, { nargs = "*", complete = "file", desc = "Preview markdown" })
+
+vim.api.nvim_create_user_command('FixEmDash', function()
+  vim.cmd('%s/—/-/ge')
+end, {})
