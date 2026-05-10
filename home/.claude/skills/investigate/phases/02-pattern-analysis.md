@@ -57,18 +57,21 @@ Grep({ pattern: "import.*from.*affected-module", path: "src/" })
 Grep({ pattern: "require.*affected-module", path: "src/" })
 ```
 
-### Step 4: CLI Cross-File Pattern Analysis (Optional)
+### Step 4: Sub-Agent Cross-File Pattern Analysis (Optional)
 
-For complex patterns that span multiple files, use CLI analysis:
+For complex patterns that span multiple files, spawn an Agent sub-agent for independent analysis:
 
-```bash
-ccw cli -p "PURPOSE: Identify all instances of antipattern across codebase; success = complete scope map
-TASK: Search for pattern '{antipattern_description}' | Map all occurrences | Assess systemic risk
-MODE: analysis
-CONTEXT: @src/**/*.{ext} | Bug in {module}, pattern: {pattern_description}
+```javascript
+Agent({
+  description: "Cross-file antipattern search",
+  prompt: `Identify all instances of an antipattern across the codebase; success = complete scope map.
+
+TASK: Search for pattern '${antipattern_description}' | Map all occurrences | Assess systemic risk
+CONTEXT: Bug in ${module}, pattern: ${pattern_description}
 EXPECTED: List of all files with same pattern, risk assessment per occurrence
-CONSTRAINTS: Focus on {antipattern} pattern only | Ignore test files for scope" \
-  --tool gemini --mode analysis
+CONSTRAINTS: Focus on ${antipattern} pattern only | Ignore test files for scope`,
+  subagent_type: "general-purpose"
+})
 ```
 
 ### Step 5: Scope Assessment

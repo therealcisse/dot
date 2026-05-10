@@ -67,19 +67,24 @@ Read({ file_path: "path/to/failing-test-output" })
 Glob({ pattern: "**/*relevant-module*" })
 ```
 
-### Step 4: Initial Diagnosis via CLI Analysis
+### Step 4: Independent Diagnosis via Sub-Agent
 
-Use `ccw cli` for a broader diagnostic perspective:
+Spawn an Agent sub-agent for a broader diagnostic perspective:
 
-```bash
-ccw cli -p "PURPOSE: Diagnose root cause of bug from collected evidence
+```javascript
+Agent({
+  description: "Root cause diagnosis from evidence",
+  prompt: `Diagnose root cause of a bug from collected evidence.
+
 TASK: Analyze error context | Trace data flow | Identify suspicious code patterns
-MODE: analysis
-CONTEXT: @{affected_files} | Evidence: {error_messages_and_traces}
+CONTEXT: ${affected_files.map(f => `@${f}`).join(" | ")} | Evidence: ${error_messages_and_traces}
 EXPECTED: Top 3 likely root causes ranked by evidence strength
-CONSTRAINTS: Read-only analysis | Focus on {affected_module}" \
-  --tool gemini --mode analysis
+CONSTRAINTS: Read-only analysis | Focus on ${affected_module}`,
+  subagent_type: "general-purpose"
+})
 ```
+
+The sub-agent has read-only access (Read, Grep, Glob) and provides an independent analysis without modifying any files.
 
 ### Step 5: Write Investigation Report
 
@@ -106,7 +111,7 @@ Generate `investigation-report.json` in memory (carried to next phase):
     "log_output": ["relevant log lines"]
   },
   "initial_diagnosis": {
-    "cli_tool_used": "gemini",
+    "analysis_method": "sub-agent",
     "top_suspects": [
       { "description": "suspect 1", "evidence_strength": "strong|moderate|weak", "files": [] }
     ]
