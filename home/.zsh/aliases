@@ -8,6 +8,10 @@ alias ze='nvim ~/.zshrc'
 alias za='nvim ~/.zsh/aliases'
 alias zf='nvim ~/.zsh/functions'
 alias oc='opencode'
+alias claude="claude --permission-mode auto"
+alias awslocal='aws --endpoint-url=http://localhost:4566'
+alias lcd='LOCALSTACK_GATEWAY_LISTEN=127.0.0.1:4566 localstack start -d'
+alias lc='LOCALSTACK_GATEWAY_LISTEN=127.0.0.1:4566 localstack start'
 
 alias jfr=/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home/bin/jfr
 

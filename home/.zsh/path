@@ -104,7 +104,7 @@ prepend_to PATH ~/kafka_2.13-3.7.0/bin
 prepend_to PATH /opt/homebrew/opt/libpq/bin
 prepend_to PATH /opt/async-profiler-3.0-linux-arm64/bin/
 prepend_to PATH ${KREW_ROOT:-$HOME/.krew}/bin
-prepend_to PATH $HOME/.rd/bin
+# prepend_to PATH $HOME/.rd/bin
 prepend_to PATH $HOME/.local/bin
 prepend_to PATH $HOME/instantclient_23_3
 

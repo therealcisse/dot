@@ -1,3 +1,11 @@
+## Scala Semantic Intelligence
+
+When working in Scala repositories, prefer project-provided semantic tooling instructions.
+
+If the repository defines a local skill, script, `AGENTS.md`, or `CLAUDE.md` section for Metals, Metals MCP, Bloop, SemanticDB, or Scala semantic navigation, follow the project-local instructions instead of assuming the repository root is the Scala build root.
+
+Do not start `metals-mcp` from the repository root unless the project explicitly says the root is the Scala build root.
+
 # Global Agent Instructions
 
 ## Rule Precedence
