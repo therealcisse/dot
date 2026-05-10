@@ -509,5 +509,5 @@ deepseek() {
   ANTHROPIC_DEFAULT_HAIKU_MODEL='deepseek-v4-flash' \
   CLAUDE_CODE_SUBAGENT_MODEL='deepseek-v4-flash' \
   CLAUDE_CODE_EFFORT_LEVEL='max' \
-  claude --permission-mode bypassPermissions "$@"
+  claude "$@"
 }

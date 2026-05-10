@@ -32,7 +32,7 @@ Violation of the Iron Law (skipping to Phase 4 without Phase 3 confirmation) is 
 ```
 Phase 1: Root Cause Investigation
   Reproduce bug, collect evidence (errors, logs, traces)
-  Use ccw cli --tool gemini --mode analysis for initial diagnosis
+  Use Agent sub-agent for independent diagnosis
   Output: investigation-report.json
       |
       v
@@ -97,14 +97,13 @@ This skill follows the Completion Status Protocol defined in `_shared/SKILL-DESI
 | [specs/iron-law.md](specs/iron-law.md) | Iron Law rules definition |
 | [specs/debug-report-format.md](specs/debug-report-format.md) | Structured debug report JSON schema |
 
-## CLI Integration
+## Sub-Agent Integration
 
-This skill leverages `ccw cli` for multi-model analysis at key points:
+This skill leverages Agent sub-agents for independent analysis at key points:
 
-| Phase | CLI Usage | Mode |
-|-------|-----------|------|
-| Phase 1 | Initial diagnosis from error evidence | `--mode analysis` |
-| Phase 2 | Cross-file pattern search | `--mode analysis` |
-| Phase 3 | Hypothesis validation assistance | `--mode analysis` |
+| Phase | Agent Usage | Purpose |
+|-------|-------------|---------|
+| Phase 1 | Initial diagnosis from error evidence | Independent root cause ranking |
+| Phase 2 | Cross-file pattern search (optional) | Systemic scope assessment |
 
-All CLI calls use `--mode analysis` (read-only). No write-mode CLI calls during investigation phases 1-3.
+Sub-agents operate in read-only mode during investigation phases 1-3.
