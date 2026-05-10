@@ -479,3 +479,35 @@ metals_clean() {
   done
   echo "Metals cleanup complete!"
 }
+
+sbxclaude() {
+  local project_dir="${1:-.}"
+  local sandbox_name="${2:-claude-dev}"
+
+  sbx run "$sandbox_name" claude "$project_dir"
+}
+
+# Claude Code using GLM
+glm() {
+  ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic" \
+  ANTHROPIC_AUTH_TOKEN="$GLM_API_KEY" \
+  API_TIMEOUT_MS="3000000" \
+  ANTHROPIC_MODEL="glm-5.1" \
+  ANTHROPIC_DEFAULT_OPUS_MODEL="glm-5.1" \
+  ANTHROPIC_DEFAULT_SONNET_MODEL="glm-5.1" \
+  ANTHROPIC_DEFAULT_HAIKU_MODEL="glm-5.1" \
+  claude "$@"
+}
+
+# Claude Code using DeepSeek V4
+deepseek() {
+  ANTHROPIC_BASE_URL='https://api.deepseek.com/anthropic' \
+  ANTHROPIC_AUTH_TOKEN="$DEEPSEEK_API_KEY" \
+  ANTHROPIC_MODEL='deepseek-v4-pro[1m]' \
+  ANTHROPIC_DEFAULT_OPUS_MODEL='deepseek-v4-pro[1m]' \
+  ANTHROPIC_DEFAULT_SONNET_MODEL='deepseek-v4-pro[1m]' \
+  ANTHROPIC_DEFAULT_HAIKU_MODEL='deepseek-v4-flash' \
+  CLAUDE_CODE_SUBAGENT_MODEL='deepseek-v4-flash' \
+  CLAUDE_CODE_EFFORT_LEVEL='max' \
+  claude --permission-mode bypassPermissions "$@"
+}

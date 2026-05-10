@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ $# -eq 0 ]; then
+  echo "Usage: ./install <package...>"
+  echo "Packages: $(ls -d */ | sed 's/\///' | tr '\n' ' ')"
+  exit 1
+fi
+
+cd "$(dirname "$0")"
+
+for pkg in "$@"; do
+  if [ ! -d "$pkg" ]; then
+    echo "Package '$pkg' not found"
+    exit 1
+  fi
+
+  target=..
+  if [ -f "$pkg/.stowrc" ]; then
+    pkg_target=$(sed -n 's/^--target=//p' "$pkg/.stowrc" | head -1)
+    if [ -n "$pkg_target" ]; then
+      target="${pkg_target/#\~/$HOME}"
+    fi
+  fi
+
+  stow -R --no-folding -v --target="$target" "$pkg"
+  echo "Installed $pkg"
+done
