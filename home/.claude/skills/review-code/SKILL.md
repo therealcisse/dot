@@ -40,8 +40,6 @@ Multi-dimensional code review skill that analyzes code across 6 key dimensions a
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-**Project Context**: Run `ccw spec load --category review` for review standards, checklists, and approval gates.
-
 ## Key Design Principles
 
 1. **Multi-dimensional review**: Covers six key dimensions: correctness, readability, performance, security, test coverage, and architectural consistency.
