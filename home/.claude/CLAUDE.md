@@ -127,3 +127,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 ## Git Policy
 
 Do not commit unless I explicitly ask you to. This overrides any skill or plan instruction to the contrary.
+
+## Attribution
+
+Do not add AI-generated attribution lines, footers, or badges to any output (PR descriptions, commit messages, comments, files).
