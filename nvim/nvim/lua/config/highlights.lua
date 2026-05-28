@@ -6,7 +6,7 @@ local function handle_inactive_background()
     vim.g.falcon_background = 1
   end
 
-  vim.api.nvim_set_hl(0, "NonText", { fg = "#000000", bg = "#000000" })
+  vim.api.nvim_set_hl(0, "NonText", { fg = "#4a4a5a", bg = "#000000" })
   vim.api.nvim_set_hl(0, "Normal", { fg = "#b4b4b9", bg = "#000000" })
   vim.api.nvim_set_hl(0, "InactiveWindow", { bg = "#000000" })
   vim.api.nvim_set_hl(0, "NormalNC", { fg = "#b4b4b9", bg = "#000000" })
@@ -24,7 +24,7 @@ local function my_highlights()
   vim.api.nvim_set_hl(0, "LspReferenceWrite", { bold = true, fg = "LightYellow" })
 
   vim.api.nvim_set_hl(0, "SignColumn", { bg = "#000000" })
-  vim.api.nvim_set_hl(0, "NonText", { fg = "#000000", bg = "#000000" })
+  vim.api.nvim_set_hl(0, "NonText", { fg = "#4a4a5a", bg = "#000000" })
   vim.api.nvim_set_hl(0, "LineNr", { bg = "#000000" })
 
   vim.api.nvim_set_hl(0, "VertSplit", { fg = "#ffffff" })
