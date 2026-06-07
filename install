@@ -1,13 +1,33 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [ $# -eq 0 ]; then
+cd "$(dirname "$0")"
+
+usage() {
   echo "Usage: ./install <package...>"
-  echo "Packages: $(ls -d */ | sed 's/\///' | tr '\n' ' ')"
+  echo "Packages: $(find . -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | tr '\n' ' ')"
+}
+
+resolve_target() {
+  local stowrc="$1"
+  local target=".."
+
+  if [ -f "$stowrc" ]; then
+    local configured_target
+    configured_target="$(sed -n 's/^--target=//p' "$stowrc" | head -1)"
+
+    if [ -n "$configured_target" ]; then
+      target="${configured_target/#\~/$HOME}"
+    fi
+  fi
+
+  echo "$target"
+}
+
+if [ $# -eq 0 ]; then
+  usage
   exit 1
 fi
-
-cd "$(dirname "$0")"
 
 for pkg in "$@"; do
   if [ ! -d "$pkg" ]; then
@@ -15,13 +35,13 @@ for pkg in "$@"; do
     exit 1
   fi
 
-  target=..
+  stowrc=".stowrc"
+
   if [ -f "$pkg/.stowrc" ]; then
-    pkg_target=$(sed -n 's/^--target=//p' "$pkg/.stowrc" | head -1)
-    if [ -n "$pkg_target" ]; then
-      target="${pkg_target/#\~/$HOME}"
-    fi
+    stowrc="$pkg/.stowrc"
   fi
+
+  target="$(resolve_target "$stowrc")"
 
   stow -R --no-folding -v --target="$target" "$pkg"
   echo "Installed $pkg"
