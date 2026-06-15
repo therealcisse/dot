@@ -43,7 +43,7 @@ alias clip="nc localhost 8377"
 alias d='hash -d'
 alias h=history
 alias j=jump
-alias ls='eza'
+# alias ls='eza'
 alias l='eza -F'
 alias ll='eza -lahF'
 alias t=tmux
@@ -56,7 +56,7 @@ if command -v nvim &> /dev/null; then
 fi
 
 alias la=tree
-alias cat=bat
+# alias cat=bat
 
 # Git
 alias gc="git commit -m"
