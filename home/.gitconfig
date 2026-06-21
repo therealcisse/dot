@@ -78,11 +78,19 @@
 	untracked = blue
 
 [core]
-	attributesfile = ~/.gitattributes
-	excludesfile = ~/.gitignore
+    attributesfile = ~/.gitattributes
+    excludesfile = ~/.gitignore
+    pager = less -FRX
 
-	# S = chop long lines (rather than wrap them onto next line)
-	pager = less -S
+[pager]
+    diff = less -FRX
+    log = less -FRX
+    show = less -FRX
+
+[alias]
+    hdiff = "!f() { git --no-pager diff \"$@\" | hunk pager; }; f"
+    hshow = "!f() { git --no-pager show \"$@\" | hunk pager; }; f"
+    hlogp = "!f() { git --no-pager log -p \"$@\" | hunk pager; }; f"
 
 [delta]
 	max-line-length = 0
@@ -123,14 +131,6 @@
 [merge]
 	conflictStyle = zdiff3
 	log = 1000
-
-[pager]
-	diff = ~/.zsh/bin/diff-highlight | menos -iFMRSX --pattern='^(commit|diff)'
-	log = ~/.zsh/bin/diff-highlight | menos -iFMRSX --pattern='^(commit|diff)'
-	show = ~/.zsh/bin/diff-highlight | menos -iFMRSX --pattern='^(commit|diff)'
-	show-branch = true
-	status = true
-	whatchanged = ~/.zsh/bin/diff-highlight | menos -iFMRSX --pattern='^(commit|diff)'
 
 [protocol]
 	version = 2
