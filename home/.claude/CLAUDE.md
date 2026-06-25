@@ -131,3 +131,29 @@ Do not commit unless I explicitly ask you to. This overrides any skill or plan i
 ## Attribution
 
 Do not add AI-generated attribution lines, footers, or badges to any output (PR descriptions, commit messages, comments, files).
+
+## Function and Module Docstrings
+
+For the comment or docstring above a function, type, module, or class,
+write *what the thing is*, not *what the code does*.
+
+- One line by default. A second line is for a domain rule the code does
+  not show (a tie-break, an invariant, a non-obvious side effect).
+- Lead with a concept noun phrase (the row, the result, the snapshot,
+  the canonical X). Avoid "this function...", "helper to...", "used to...".
+- Do not name internals: no "joins", "left-joins", "loops over", "iterates",
+  "calls X then Y", "uses a window/map/reduce". The reader can see those.
+- Drop anything the signature or body already conveys. If removing the
+  sentence wouldn't confuse a reader, remove it.
+- Keep rules that are not visible from the body (e.g. "SUCCESS wins ties",
+  "leaves excluded entries null", "raises on existing partition").
+
+Good:
+    /// Canonical result per id: latest by timestamp, SUCCESS wins ties.
+    """Refuse to overwrite an existing snapshot date."""
+    // Per-user snapshot row pairing the planned action with its outcome.
+
+Bad:
+    /// Deduplicates results to one row per id using a window function.
+    """Helper function that raises if data for this date exists."""
+    // Builds the decisions object by joining and selecting fields.
