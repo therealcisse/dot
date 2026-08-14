@@ -85,6 +85,7 @@ Before implementing:
 - No "flexibility" or "configurability" that wasn't requested.
 - No defensive error handling for scenarios that are not realistically possible in the stated context.
 - If you write 200 lines and it could be 50, rewrite it.
+- If you need a paragraph-long comment to justify why the workaround is OK, the code is wrong — fix the code.
 
 Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
 

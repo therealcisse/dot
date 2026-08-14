@@ -63,7 +63,7 @@
 	wf = "!f() { git --paginate diff --stat=10000 ${1:-HEAD} | awk '{print $1}' | sed '$d' | sort; }; f"
 
 [color]
-	ui = auto
+	ui = always
 
 [color "diff-highlight"]
 	newhighlight = reverse
@@ -80,7 +80,7 @@
 [core]
     attributesfile = ~/.gitattributes
     excludesfile = ~/.gitignore
-    pager = less -FRX
+	pager = delta
 
 [pager]
     diff = less -FRX
@@ -124,6 +124,7 @@
 
 [interactive]
 	diffFilter = diff-highlight
+	diffFilter = delta
 
 [log]
 	decorate = short
