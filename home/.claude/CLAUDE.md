@@ -148,6 +148,9 @@ write *what the thing is*, not *what the code does*.
   sentence wouldn't confuse a reader, remove it.
 - Keep rules that are not visible from the body (e.g. "SUCCESS wins ties",
   "leaves excluded entries null", "raises on existing partition").
+- After writing or editing a file, and before reporting the work complete,
+  re-read the changed comments and docstrings against these rules (and any
+  project comment-style rules) and fix any violation.
 
 Good:
     /// Canonical result per id: latest by timestamp, SUCCESS wins ties.

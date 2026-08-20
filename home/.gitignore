@@ -81,3 +81,5 @@ local.sbt
 .aider*
 
 collect_jars.py
+
+**/.claude/settings.local.json
