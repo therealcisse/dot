@@ -72,5 +72,8 @@ end
 if vim.fn.executable("zig") == 1 then
   table.insert(servers, "zls")
 end
+if vim.fn.executable("smithy-language-server") == 1 then
+  table.insert(servers, "smithy_ls")
+end
 
 vim.lsp.enable(servers)

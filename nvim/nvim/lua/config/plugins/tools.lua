@@ -209,7 +209,7 @@ return {
         require("telescope").extensions.ast_grep.ast_grep(live_grep_opts)
       end)
       vim.keymap.set("n", "<C-Y>", function()
-        require("telescope").extensions.yaml_schema.yaml_schema()
+        require("yaml-companion").open_ui_select()
       end)
       vim.keymap.set("n", "<C-p>", function() builtin.find_files() end)
       vim.keymap.set("n", "<leader>p", function() builtin.find_files() end)
@@ -223,11 +223,8 @@ return {
 
   -- Yaml companion
   {
-    "someone-stole-my-name/yaml-companion.nvim",
-    dependencies = { "neovim/nvim-lspconfig", "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
-    config = function()
-      require("telescope").load_extension("yaml_schema")
-    end,
+    "mosheavni/yaml-companion.nvim",
+    dependencies = { "neovim/nvim-lspconfig", "nvim-lua/plenary.nvim" },
   },
 
 }

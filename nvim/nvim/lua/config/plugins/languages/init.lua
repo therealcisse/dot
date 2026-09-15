@@ -16,8 +16,23 @@ return {
     config = function()
       -- Auto-install missing parsers (only once, not every startup)
       local parsers = {
-        "bash", "yaml", "markdown", "markdown_inline", "hcl", "lua", "regex",
-        "scala", "go", "html", "javascript", "java", "json", "python", "tsx", "nix",
+        "bash",
+        "yaml",
+        "markdown",
+        "markdown_inline",
+        "hcl",
+        "lua",
+        "regex",
+        "scala",
+        "go",
+        "html",
+        "javascript",
+        "java",
+        "json",
+        "python",
+        "tsx",
+        "nix",
+        "smithy"
       }
       for _, parser in ipairs(parsers) do
         if not pcall(vim.treesitter.query.get, parser, "highlights") then
@@ -26,16 +41,23 @@ return {
       end
 
       local indent_disable = {
-        dart = true, python = true, css = true, html = true,
-        gdscript = true, gdscript3 = true, gd = true, Dockerfile = true,
-        scala = true, sbt = true,
+        dart = true,
+        python = true,
+        css = true,
+        html = true,
+        gdscript = true,
+        gdscript3 = true,
+        gd = true,
+        Dockerfile = true,
+        scala = true,
+        sbt = true
       }
 
       vim.api.nvim_create_autocmd("FileType", {
         group = vim.api.nvim_create_augroup("treesitter_setup", { clear = true }),
         pattern = "*",
         callback = function(event)
-          local lang = event.match
+          local lang = vim.treesitter.language.get_lang(event.match) or event.match
           pcall(vim.treesitter.start, event.buf, lang)
           if not indent_disable[lang] then
             vim.bo[event.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
@@ -73,10 +95,10 @@ return {
       local metals = require("metals")
       local metals_config = metals.bare_config()
 
-      local jdk17_path = vim.fn.system("jenv prefix 17"):gsub("%s+", "")
+      local jdk21_path = vim.fn.system("jenv prefix 21"):gsub("%s+", "")
 
       metals_config.settings = {
-        javaHome = jdk17_path,
+        javaHome = jdk21_path,
         serverProperties = {
           "--add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
           "--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED",
@@ -89,7 +111,7 @@ return {
           "--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED",
           "--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED",
         },
-        autoImportBuild = "initial",
+        automaticImportBuild = "initial",
         showImplicitArguments = false,
         showInferredType = false,
         excludedPackages = {
@@ -104,7 +126,7 @@ return {
           inferredTypes = { enable = false },
           hintsInPatternMatch = { enable = false },
         },
-        enableSemanticHighlighting = false,
+        enableSemanticHighlighting = true,
       }
 
       metals_config.init_options.statusBarProvider = "on"
