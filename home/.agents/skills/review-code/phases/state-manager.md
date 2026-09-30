@@ -58,9 +58,11 @@ Initialize a new state file with default values.
 /**
  * Initialize state file with default structure
  * @param {string} workDir - Working directory path
+ * @param {object} [options] - Optional initialization options
+ * @param {string} [options.review_target] - Seeded review scope (relative path); skips the interactive target question
  * @returns {object} - Initial state object
  */
-function initState(workDir) {
+function initState(workDir, options = {}) {
   validateWorkDir(workDir);
   const now = new Date().toISOString();
 
@@ -68,6 +70,7 @@ function initState(workDir) {
     status: 'pending',
     started_at: now,
     updated_at: now,
+    review_target: options.review_target || null,
     context: null,
     scan_completed: false,
     scan_summary: null,

@@ -25,8 +25,8 @@ This module uses StateManager for all state operations to ensure:
 ### StateManager API (from state-manager.md)
 
 ```javascript
-// Initialize state.
-StateManager.initState(workDir)
+// Initialize state; pass { review_target } to seed a non-interactive scope.
+StateManager.initState(workDir, { review_target: 'src/module' })
 
 // Read the current state.
 StateManager.getState(workDir)

@@ -114,6 +114,12 @@ Write(`${workDir}/.gitkeep`, '');
 Write(`${workDir}/findings/.gitkeep`, '');
 ```
 
+When the caller provided a review scope (non-interactive or briefed mode), initialize state with it so collect-context skips its target question:
+
+```javascript
+StateManager.initState(workDir, { review_target: 'identity/src/main/scala' });
+```
+
 ## Output Structure
 
 ```text

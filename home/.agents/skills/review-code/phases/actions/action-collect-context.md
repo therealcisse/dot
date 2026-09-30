@@ -17,54 +17,58 @@ Before starting the review, collect basic information about the target code:
 
 ```javascript
 async function execute(state, workDir) {
-  // 1. Ask the user for the review target.
-  const input = await AskUserQuestion({
-    questions: [{
-      question: "Please specify the code path to review:",
-      header: "Review Target",
-      multiSelect: false,
-      options: [
-        { label: "Current directory", description: "Review all code under the current working directory" },
-        { label: "src/", description: "Review the src/ directory" },
-        { label: "Custom path", description: "Enter a custom path" }
-      ]
-    }]
-  });
-  
   function validatePath(p) {
     if (!p || p.startsWith('/') || p.includes('..')) return null;
     const resolved = p.replace(/\/+$/, '');
     return resolved || '.';
   }
 
+  // 1. Resolve the review target: a seeded scope wins, else ask the user.
   let targetPath;
-  if (input["Review Target"] === "Custom path") {
-    targetPath = validatePath(input["Other"]);
-    let retries = 0;
-    while (!targetPath && retries < 3) {
-      retries++;
-      const retry = await AskUserQuestion({
-        questions: [{
-          question: "Invalid path. Provide a relative path within the project (no '..' or absolute paths):",
-          header: "Review Target",
-          multiSelect: false,
-          options: [
-            { label: "src/", description: "Review the src/ directory" },
-            { label: "Custom path", description: "Enter a custom relative path" }
-          ]
-        }]
-      });
-      targetPath = retry["Review Target"] === "Custom path"
-        ? validatePath(retry["Other"])
-        : retry["Review Target"] === "Current directory" ? "." : "src/";
-    }
-    if (!targetPath) targetPath = ".";
+  if (state.review_target) {
+    targetPath = validatePath(state.review_target) || '.';
   } else {
-    targetPath = input["Review Target"] === "Current directory" ? "." : "src/";
+    const input = await AskUserQuestion({
+      questions: [{
+        question: "Please specify the code path to review:",
+        header: "Review Target",
+        multiSelect: false,
+        options: [
+          { label: "Current directory", description: "Review all code under the current working directory" },
+          { label: "src/", description: "Review the src/ directory" },
+          { label: "Custom path", description: "Enter a custom path" }
+        ]
+      ]
+    });
+
+    if (input["Review Target"] === "Custom path") {
+      targetPath = validatePath(input["Other"]);
+      let retries = 0;
+      while (!targetPath && retries < 3) {
+        retries++;
+        const retry = await AskUserQuestion({
+          questions: [{
+            question: "Invalid path. Provide a relative path within the project (no '..' or absolute paths):",
+            header: "Review Target",
+            multiSelect: false,
+            options: [
+              { label: "src/", description: "Review the src/ directory" },
+              { label: "Custom path", description: "Enter a custom relative path" }
+            ]
+          ]
+        });
+        targetPath = retry["Review Target"] === "Custom path"
+          ? validatePath(retry["Other"])
+          : retry["Review Target"] === "Current directory" ? "." : "src/";
+      }
+      if (!targetPath) targetPath = ".";
+    } else {
+      targetPath = input["Review Target"] === "Current directory" ? "." : "src/";
+    }
   }
 
   // 2. Collect the file list.
-  const files = Glob(`${targetPath}/**/*.{ts,tsx,js,jsx,py,java,go,rs,cpp,c,cs}`);
+  const files = Glob(`${targetPath}/**/*.{ts,tsx,js,jsx,py,java,go,rs,cpp,c,cs,scala}`);
   
   // 3. Detect the primary language.
   const languageCounts = {};
@@ -78,7 +82,8 @@ async function execute(state, workDir) {
       'go': 'Go',
       'rs': 'Rust',
       'cpp': 'C++', 'c': 'C',
-      'cs': 'C#'
+      'cs': 'C#',
+      'scala': 'Scala'
     };
     const lang = langMap[ext] || 'Unknown';
     languageCounts[lang] = (languageCounts[lang] || 0) + 1;

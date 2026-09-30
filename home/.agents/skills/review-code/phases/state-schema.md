@@ -13,6 +13,7 @@ interface ReviewState {
   completed_at?: string;   // ISO timestamp
   
   // === Review target ===
+  review_target?: string;    // Seeded review scope (relative path); set by a non-interactive caller to skip the target question
   context: {
     target_path: string;       // Target path, file or directory
     files: string[];           // List of files to review
@@ -108,6 +109,7 @@ interface ExecutionError {
   "status": "pending",
   "started_at": "2024-01-01T00:00:00.000Z",
   "updated_at": "2024-01-01T00:00:00.000Z",
+  "review_target": null,
   "context": null,
   "scan_completed": false,
   "scan_summary": null,
