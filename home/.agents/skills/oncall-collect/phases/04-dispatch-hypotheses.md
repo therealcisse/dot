@@ -36,7 +36,7 @@ Validation failures (missing fields, zero falsification attempts on a SUPPORTED,
 
 ### Step 4: Handle the Worst Case
 
-Every verdict `INSUFFICIENT` → do not force a synthesis conclusion. Proceed to Phase 5; the synthesis will carry `leading_hypothesis: null` and a `missing_evidence` list — that is an honest outcome, and the mitigation skill's gate will handle it (safest-option mode).
+Every verdict `INSUFFICIENT` → do not force a synthesis conclusion. Proceed to Phase 4b (the review set holds the one INSUFFICIENT verdict closest to decidable), then Phase 5; the synthesis will carry `leading_hypothesis: null` and a `missing_evidence` list — that is an honest outcome, and the mitigation skill's gate will handle it (safest-option mode).
 
 ## Rules
 
@@ -46,4 +46,4 @@ Every verdict `INSUFFICIENT` → do not force a synthesis conclusion. Proceed to
 
 ## Next Phase
 
-Proceed to [Phase 5: Synthesize](05-synthesize.md).
+Proceed to [Phase 4b: Review Verdicts](04b-review-verdicts.md).

@@ -18,6 +18,7 @@ The full layout of `~/.incidents/<incident-id>/` across the on-call skill chain.
   cloudtrail/             # collect: AWS API activity in window
   evidence-index.json     # collect: frozen manifest
   hypotheses/H*.json      # collect: verdicts, one per hypothesis
+  hypotheses/H*.review.json   # collect: one independent review per reviewed verdict
   synthesis.json/.md      # collect: merged verdicts + ranking
   mitigation.json/.md     # mitigate: options, approval record, execution record
   verification.json/.md   # verify: watchlist, observations, verdict
@@ -57,4 +58,6 @@ Rules:
 
 ## Freeze Semantics
 
-"Frozen" is a contract, not a filesystem flag: after `evidence-index.json` exists, hypothesis agents read only indexed files. Mitigation and verification skills read the bundle but do not modify frozen files; they append their own artifacts.
+"Frozen" is a contract, not a filesystem flag: after `evidence-index.json` exists, hypothesis and review agents read only indexed files. Mitigation and verification skills read the bundle but do not modify frozen files; they append their own artifacts.
+
+Verdicts (`hypotheses/H*.json`) and reviews (`hypotheses/H*.review.json`) are post-freeze artifacts: written after the index, never listed in it, never cited as evidence.

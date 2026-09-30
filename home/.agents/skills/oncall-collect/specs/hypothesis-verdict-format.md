@@ -63,3 +63,4 @@ Structured output of one hypothesis-investigator agent. Written to `hypotheses/<
 - `verdict: REFUTED` requires ≥1 contradicting ref.
 - Every `ref` must resolve against `evidence-index.json`. Verdicts citing unindexed files are discarded by the synthesizer.
 - Confidence ≥ 0.8 needs ≥2 independent supporting refs.
+- Confidence bands are defined in [confidence-calibration.md](confidence-calibration.md); investigators, reviewers, and the synthesizer all score on that scale.

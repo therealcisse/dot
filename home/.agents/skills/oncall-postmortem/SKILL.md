@@ -36,12 +36,12 @@ Phase 3: Corrective Actions & Lessons
       |
       v
 Phase 4: Publish
-  postmortem.json/.md in bundle; PD note; optional Teams; STACK.md overlay gaps
+  postmortem.json/.md in bundle; PD note (opt-in); Teams (opt-in); STACK.md overlay gaps
 ```
 
 ## Guardrails (strictly enforced)
 
-- Local + `~/.config/oncall/` writes only, plus one optional PD incident note and one optional Teams message (both skipped under `DRY_RUN=1`).
+- Local + `~/.config/oncall/` writes only; the outward writes (one PD incident note, one Teams message) are opt-in — sent only with explicit in-conversation user approval naming the write, never on the agent's own initiative (both skipped under `DRY_RUN=1`).
 - No PD ack/resolve, ever.
 - Corrective actions are suggestions for humans to accept/assign — do not create tickets in external trackers unless explicitly configured and asked.
 - Real service names never enter this repo; graduated references land in `~/.config/oncall/references/`.

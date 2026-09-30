@@ -29,7 +29,9 @@ Per the spec:
 
 Never upgrade RECOVERING to VERIFIED early because the trend "looks obvious".
 
-## Broadcast (via `teams` MCP; skipped under `DRY_RUN=1`)
+## Broadcast (opt-in; via `teams` MCP; skipped under `DRY_RUN=1`)
+
+Draft the verdict message below and present it. Post it ONLY if the user explicitly approves the Teams broadcast; absent that approval, do not send — record it as held in the report.
 
 ```
 [Verify] <incident title> — <id>
@@ -40,7 +42,7 @@ Window: <completed/partial, samples>
 Next: <postmortem | new mitigation round | keep observing>
 ```
 
-One message. Append the PD timeline note is NOT done here — no PD writes in this skill.
+If and only if approved, send one message. Append the PD timeline note is NOT done here — no PD writes in this skill.
 
 ## Completion
 

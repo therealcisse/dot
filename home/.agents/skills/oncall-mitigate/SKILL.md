@@ -14,7 +14,7 @@ Turns a synthesis into a decision package: ranked mitigation options, a mandator
 2. **Every option is reversible or explicitly marked irreversible**: each carries an abort condition and an undo (or "no undo — requires human sign-off").
 3. **Gate on synthesis**: no mitigation options without `synthesis.json` from `oncall-collect`. If synthesis carries `leading_hypothesis: null`, only safest-option mode is allowed (see phases).
 4. **Human execution is the default**: emit exact, copy-pasteable commands. MCP-triggered execution only when a separate write-scoped server (`spinnaker-write` or similar) is deliberately configured.
-5. **Broadcast, don't collect**: Teams learns what was decided and executed; Teams replies/reactions are never approvals.
+5. **Broadcast, don't collect**: the Teams broadcast is opt-in (sent only on explicit approval) and tells what was decided and executed; Teams replies/reactions are never approvals.
 
 ## Prerequisites
 
@@ -37,7 +37,7 @@ Phase 3: Human Gate + Execution        [GATE: explicit user selection]
       |
       v
 Phase 4: Record + Hand Off
-  mitigation.json; Teams broadcast; next: oncall-verify
+  mitigation.json; Teams broadcast (opt-in); next: oncall-verify
 ```
 
 ## MCP Requirements

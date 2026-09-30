@@ -5,7 +5,7 @@ Persist the decision, tell humans, and hand the watch to `oncall-verify`.
 ## Objective
 
 - Finalize `mitigation.json` + `mitigation.md`
-- Broadcast the decision to Teams (what was done — never that Teams approved anything)
+- Offer a Teams broadcast of the decision; post only on explicit approval (what was done — never that Teams approved anything)
 - Name the next skill and stop
 
 ## Execution Steps
@@ -14,7 +14,9 @@ Persist the decision, tell humans, and hand the watch to `oncall-verify`.
 
 `mitigation.md` renders the decision story: basis (synthesis leading hypothesis or safest-option mode), options considered, what was selected and by whom, execution result, and what the verifier will watch. Write both files; append timeline events.
 
-### Step 2: Teams Broadcast (via `teams` MCP; skipped in DRY_RUN)
+### Step 2: Teams Broadcast (opt-in; via `teams` MCP; skipped in DRY_RUN)
+
+Draft the message below and present it to the user. Post it ONLY if the user, in this conversation, explicitly approves sending the Teams broadcast; absent that approval, do not send — record "Teams broadcast held (not approved)" in the timeline. `DRY_RUN=1` sends nothing regardless.
 
 ```
 [Mitigation] <incident title> — <id>
@@ -25,7 +27,7 @@ Watching next: <primary watchlist signals> for <time_to_verify>
 Abort if: <abort_condition>
 ```
 
-One message. Broadcast-only.
+If and only if approved, send one message. Broadcast-only.
 
 ### Step 3: Hand Off
 

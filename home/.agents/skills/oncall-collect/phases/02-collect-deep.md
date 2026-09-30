@@ -10,6 +10,22 @@ Gather the evidence classes triage deliberately skipped. All queries via MCP, al
 - `cloudtrail/`: AWS API activity in the change window
 - Record coverage honestly — unavailable classes are `unavailable`/`not-configured`, never silently skipped
 
+## Targeting
+
+The collection plan from Phase 1 (union of `would_be_decided_by` across the dispatch set) maps onto the steps below. Targeting adds depth where a hypothesis needs it; the generic Steps 1–4 still run in full.
+
+| Class | Collected by |
+|-------|--------------|
+| `metric` | Step 1 |
+| `log` | Step 2 |
+| `trace` | Step 3 |
+| `cloudtrail` | Step 4 |
+| `deployment` | Confirm triage's `deployments/` files are present in the bundle; record in `timeline.json` if not |
+| `dependency` | Step 1 health metrics for each dependent in `triage.json.blast_radius_hint.downstream` + Step 3 dependency breakdown |
+| `external` | Not collectable via MCP. Record in `timeline.json` as a known gap so verdicts can list it as `missing_evidence` |
+
+Rule: every class named by any hypothesis is either collected or recorded `unavailable`/`not-configured` — never silently absent.
+
 ## Execution Steps
 
 ### Step 1: Metrics (via `datadog` MCP)
@@ -34,13 +50,14 @@ Write `traces/<service>-spans.json` with span name, duration, status, and the sl
 
 ### Step 5: Note New Candidates
 
-If evidence here contradicts or extends the dispatch set (e.g. logs show a config parse error nobody hypothesized), append the new hypothesis to the dispatch set with rationale, respecting the cap of 5.
+If evidence here contradicts or extends the dispatch set (e.g. logs show a config parse error nobody hypothesized), append the new hypothesis to the dispatch set with rationale and its own `would_be_decided_by`, respecting the cap of 5. A candidate not appended because the cap is reached is still recorded in `timeline.json` with its rationale — Phase 5's blind-spot check reads it.
 
 ## Rules
 
 - Read-only. No comment, no mute, no dashboard writes.
 - Every file records its query and window — future readers must be able to reproduce it.
 - Volume discipline: evidence files are for reasoning, not archival. Downsample, summarize signatures, cite counts.
+- Targeting adds to Steps 1–4; it never removes them. A hypothesis that names only `log` does not excuse skipping metrics.
 
 ## Next Phase
 
