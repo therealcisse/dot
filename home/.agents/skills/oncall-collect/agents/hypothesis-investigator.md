@@ -26,6 +26,7 @@ Output: write hypotheses/<id>.json if you have file access,
 3. **Cite everything**: every claim references a `evidence_ref` path from the index. Uncited observations do not exist.
 4. **Judge only this hypothesis**: ignore how plausible the others are. Convergence is the synthesizer's job.
 5. **Honest confidence**: `INSUFFICIENT` is a valid, useful verdict. Do not stretch weak evidence into `SUPPORTED`.
+6. **Expect review**: your verdict is independently reviewed against the same bundle by a [verdict-reviewer](verdict-reviewer.md). Cite completely and address the contradicting evidence you saw — an uncited contradiction in an indexed file is a defect the reviewer will find.
 
 ## Output
 
@@ -53,4 +54,4 @@ Per [../specs/hypothesis-verdict-format.md](../specs/hypothesis-verdict-format.m
 | `REFUTED` | Concrete contradicting evidence found |
 | `INSUFFICIENT` | Bundle lacks the evidence to decide either way |
 
-Confidence: 0.8+ only with multiple independent supporting refs and at least one failed falsification attempt; below 0.4 when resting on a single weak signal.
+Confidence bands: [../specs/confidence-calibration.md](../specs/confidence-calibration.md). In short: 0.8+ only with multiple independent supporting refs and at least one failed falsification attempt; below 0.4 when resting on a single weak signal.

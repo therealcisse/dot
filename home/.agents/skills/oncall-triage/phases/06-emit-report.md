@@ -32,6 +32,9 @@ Rules:
 4. `rationale` uses correlation wording only. "Deploy at 14:31 correlates with onset at 14:37" — not "deploy caused the incident"
 5. Standard candidate classes to consider (skip ones with no evidence): recent-change regression, dependency latency, saturation/resource, config change, platform event (AWS Health), recurring known issue
 6. If Phase 5 set `recurrent: true`, previously confirmed causes may be listed as candidates — clearly rationaled on history, not on current evidence
+7. Each names ≥1 `would_be_decided_by` class from the spec enum (`metric`, `log`, `trace`, `cloudtrail`, `deployment`, `dependency`, `external`) — the evidence whose presence in the bundle would decide it; `oncall-collect` targets collection to these
+8. Hypotheses must be distinct: if two share the same `would_be_decided_by` set AND overlapping `evidence_refs`, merge them into one
+9. Every standard class from rule 5 not represented by an emitted hypothesis gets a `considered_and_skipped` entry with a reason (e.g. `platform-event` — "no AWS Health events in window")
 
 Fewer well-evidenced hypotheses beat many speculative ones. It is fine to emit one.
 
@@ -68,6 +71,9 @@ Write both files into the bundle; append the report event to `timeline.json`.
 ## Quality Checks
 
 - [ ] Every hypothesis has ≥1 evidence_ref that exists in the bundle
+- [ ] Every hypothesis names ≥1 `would_be_decided_by` class from the spec enum
+- [ ] No two hypotheses share the same `would_be_decided_by` set and overlapping `evidence_refs`
+- [ ] Every standard class from Step 2 rule 5 is either an emitted hypothesis or a `considered_and_skipped` entry
 - [ ] No causal wording anywhere in either file
 - [ ] `triage.json` validates against the spec schema
 - [ ] Coverage honestly reflects degraded/unmapped servers

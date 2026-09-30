@@ -29,7 +29,7 @@ Phase 1: Baseline & Watchlist
       v
 Phase 2: Observe & Verdict
   Sample watchlist at cadence over the window; record observations;
-  issue verdict; broadcast; hand off (postmortem | back to mitigate)
+  issue verdict; broadcast (opt-in); hand off (postmortem | back to mitigate)
 ```
 
 ## Verdicts
@@ -43,11 +43,11 @@ Phase 2: Observe & Verdict
 
 ## MCP Requirements
 
-`datadog` (metric queries at each sample) and `teams` (verdict broadcast) — read + one message, same aliases and overlay as the rest of the chain.
+`datadog` (metric queries at each sample) and `teams` (verdict broadcast, opt-in) — read + at most one message, sent only on explicit approval, same aliases and overlay as the rest of the chain.
 
 ## Guardrails (strictly enforced)
 
-- Read-only against all systems; the only write is the verdict broadcast to Teams (skipped under `DRY_RUN=1`).
+- Read-only against all systems; the only outward write is the verdict broadcast to Teams, and it is opt-in — sent only with explicit in-conversation user approval naming it, never on the agent's own initiative (skipped under `DRY_RUN=1`).
 - Never ack/resolve PagerDuty, even on VERIFIED.
 - Never declare VERIFIED on a partial window because things "look fine".
 - Samples are recorded with timestamps and query text — the verdict must be auditable from the bundle alone.

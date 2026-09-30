@@ -7,6 +7,7 @@ Verify the prerequisite chain and load what Phase 4 will dispatch.
 - Confirm the bundle exists and contains a completed `triage.json`
 - Load the STACK.md overlay mapping for the incident's service
 - Assemble the hypothesis dispatch set
+- Build the collection plan from each hypothesis's `would_be_decided_by`
 - Decide the collection window
 
 ## Execution Steps
@@ -29,6 +30,8 @@ Read `~/.config/oncall/stack.md` (overlay first; the in-repo STACK.md is templat
 
 Start from `triage.json.initial_hypotheses` (all of them, regardless of triage's informal ranking). During Phase 2, if collection surfaces a strong new candidate, append it with a recorded rationale in this phase's timeline entry. Hard cap: 5 total.
 
+For each hypothesis, read `would_be_decided_by` — the evidence class(es) whose presence in the bundle would decide it: `metric`, `log`, `trace`, `cloudtrail`, `deployment`, `dependency`, `external`. Absent (older triage) → treat as all classes. The union across the dispatch set is the **collection plan**; Phase 2 targets collection to it. A candidate appended during Phase 2 gets its own `would_be_decided_by`, recorded alongside its rationale, and joins the plan.
+
 ### Step 4: Collection Window
 
 - `from` = `impact_started_at` − 60m
@@ -39,6 +42,7 @@ All Phase 2 queries use this same window. Consistent windows make evidence compa
 ## Output
 
 - Dispatch set (in-memory / timeline entry)
+- Collection plan: union of `would_be_decided_by` across the dispatch set (timeline entry)
 - Collection window
 
 ## Next Phase
